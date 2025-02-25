@@ -17,7 +17,6 @@
 ## 기술 스택  
 - **Frontend:** React  
 - **Backend:** Python (FastAPI)  
-- **Database:** Firebase (NoSQL)  
 - **API 연동:** OpenAI (ChatGPT 기반)  
 
 ---
