@@ -1,26 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
+import CustomButton from './components/CustomButton'; // 컴포넌트 불러오기
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <CustomButton type="primary">클릭</CustomButton> {/* 버튼 추가 */}
       </header>
     </div>
   );
 }
 
 export default App;
-// .....
