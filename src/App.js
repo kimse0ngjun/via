@@ -1,16 +1,13 @@
-import React from "react";
-import { Layout } from "antd";
-import AppHeader from "./components/AppHeader";
+import React from 'react';
+import './App.css';  // 스타일시트 추가
+import AppHeader from './components/AppHeader';  // MainPage 컴포넌트를 임포트
 
-const { Content } = Layout;
-
-const App = () => {
+function App() {
   return (
-    <Layout>
-      <AppHeader />
-      <Content style={{ padding: "20px" }}>메인 컨텐츠 영역</Content>
-    </Layout>
+    <div className="App">
+      <AppHeader />  {/* MainPage 컴포넌트를 여기에 적용 */}
+    </div>
   );
-};
+}
 
 export default App;

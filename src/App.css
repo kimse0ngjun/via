@@ -1,33 +1,4 @@
-*{
-  box-sizing: border-box;
+/* App.css */
+.App {
+  font-family: 'Inter', sans-serif;
 }
-/* Header 스타일 */
-.header {
-  background: black;
-  padding: 10px;
-}
-
-.menu {
-  background-color: aquamarine;
-  line-height: 64px;
-  border: 1px solid red;
-  padding-top: 33x;
-}
-/* Content 스타일 */
-.content {
-  padding: 0 50px;
-}
-
-.content-inner {
-  padding: 24px;
-  min-height: 380px;
-}
-
-/* Footer 스타일 */
-.footer {
-  text-align: center;
-}
-
-
-
-
