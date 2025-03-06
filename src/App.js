@@ -1,14 +1,16 @@
-import './App.css';
-import CustomButton from './components/CustomButton'; // 컴포넌트 불러오기
+import React from "react";
+import { Layout } from "antd";
+import AppHeader from "./components/AppHeader";
 
-function App() {
+const { Content } = Layout;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <CustomButton type="primary">클릭</CustomButton> {/* 버튼 추가 */}
-      </header>
-    </div>
+    <Layout>
+      <AppHeader />
+      <Content style={{ padding: "20px" }}>메인 컨텐츠 영역</Content>
+    </Layout>
   );
-}
+};
 
 export default App;
