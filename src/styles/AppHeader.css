@@ -1,84 +1,219 @@
+/* 기본 스타일 */
 * {
   box-sizing: border-box;
 }
-
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 40px;
-  border: 1px solid #000;
-  background-color: white !important;
-  margin: 0 auto;
+/* Box 부분 스타일 */
+.ant-layout-header{
+  background-color: white;
+}
+.box {
   height: 64px;
-  width: 1282px;
-  flex-shrink: 0;
-  margin: 33px auto;
-  position: absolute; /* 수정: absolute로 변경하여 특정 위치에 배치 */
-  top: 0; /* 상단에 고정 */
-  left: 0; /* 왼쪽에 고정 */
-  right: 0; /* 오른쪽에 고정 */
-  z-index: 1000; /* 다른 콘텐츠보다 위에 표시 */
+  width: 1281px;
 }
 
-.auth-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;  /* 오른쪽 정렬 */
+.box .header {
+  background-color: transparent;
+  height: 64px;
+  left: 0;
+  position: fixed;
+  top: 33px;
+  width: 1283px;
 }
 
-.auth-button {
-  margin-right: 110px;
+.box .overlap {
+  background-image: url(../assets/rectangle-15.png);
+  background-size: 100% 100%;
+  height: 64px;
+  position: relative;
+  width: 1281px;
+  margin-left: 100px;
+  margin-top: 33px;
 }
 
-.logo {
-  color: #AA60C8;
-  font-family: Inter;
-  font-size: 25px;
+.box .login-btn {
+  all: unset;
+  box-sizing: border-box;
+  height: 23px;
+  left: 1089px;
+  position: absolute;
+  top: 20px;
+  width: 46px;
+}
+
+.box .text-wrapper {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
   font-style: italic;
   font-weight: 500;
+  left: 0;
+  letter-spacing: 0;
   line-height: normal;
-  margin-top: -5px;
+  position: absolute;
+  top: 0;
 }
 
-.menu {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  max-width: 370px;
-  background-color: white;
-  margin-left: 50px;
+.box .signup-btn {
+  height: 52px;
+  left: 1148px;
+  position: absolute;
+  top: 6px;
+  width: 131px;
 }
 
-.menu .ant-menu-item {
-  color: black !important; /* 메뉴 글씨 색상 */
-  font-size: 16px; /* 글씨 크기 */
-  height: 40px; /* 높이 조절 */
-  line-height: 40px; /* 텍스트 정렬 */
-  padding: 0 15px; /* 좌우 간격 */
+.box .overlap-group {
+  background-image: url(../assets/rectangle-1.svg);
+  background-size: 100% 100%;
+  height: 52px;
+  position: relative;
+  width: 129px;
 }
 
-.menu .ant-menu-item:hover {
-  color: #7A3E9D !important; /* 메뉴 호버 시 색상 */
+.box .vuesax-linear-arrow-wrapper {
+  background-color: #ffffff;
+  border-radius: 20.5px / 20.51px;
+  height: 41px;
+  left: 84px;
+  position: absolute;
+  top: 6px;
+  width: 41px;
 }
 
-.menu .ant-menu-item-selected::after {
-  border-bottom-color: #7A3E9D !important; /* 선택된 메뉴 밑줄 색상 변경 */
+.box .vuesax-linear-arrow {
+  height: 24px !important;
+  left: 9px !important;
+  position: absolute !important;
+  top: 8px !important;
+  width: 24px !important;
 }
 
-.menu .ant-menu-item::after {
-  border-bottom: 2px solid transparent !important; /* 기본 밑줄 제거 */
-  transition: border-bottom 0.3s ease-in-out;
+.box .div {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 11px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 15px;
+  width: 63px;
 }
 
-.menu .ant-menu-item:hover::after {
-  border-bottom-color: #7A3E9D !important; /* 호버 시 보라색 밑줄 */
+.box .line {
+  height: 34px;
+  left: 1077px;
+  object-fit: cover;
+  position: absolute;
+  top: 14px;
+  width: 1px;
 }
 
-.menu .ant-menu-item-selected {
-  color: #7A3E9D !important; /* 클릭한 항목의 글자 색상 */
+.box .VIA-com {
+  height: 19px;
+  left: 37px;
+  position: absolute;
+  top: 24px;
+  width: 98px;
 }
 
-.menu .ant-menu-item-selected::after {
-  border-bottom-color: #7A3E9D !important; /* 클릭한 항목의 밑줄 색상 */
+.box .navbar {
+  height: 29px;
+  left: 230px;
+  position: absolute;
+  top: 20px;
+  width: 404px;
+}
+
+.box .text-wrapper-2 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 35px;
+}
+
+.box .text-wrapper-3 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 92px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 35px;
+}
+
+.box .vector {
+  height: 7px;
+  left: 128px;
+  position: absolute;
+  top: 23px;
+  width: 7px;
+}
+
+.box .text-wrapper-4 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 184px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 74px;
+}
+
+.box .img {
+  height: 7px;
+  left: 259px;
+  position: absolute;
+  top: 23px;
+  width: 7px;
+}
+
+.box .text-wrapper-5 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 315px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 74px;
+}
+
+.box .vector-2 {
+  height: 7px;
+  left: 390px;
+  position: absolute;
+  top: 23px;
+  width: 7px;
+}
+
+.box .vector-3 {
+  height: 7px;
+  left: 36px;
+  position: absolute;
+  top: 23px;
+  width: 7px;
 }
