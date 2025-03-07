@@ -1,6 +1,6 @@
 // src/components/LoginPage.js
 import React from 'react';
-import AppHeader from "./AppHeader";  // AppHeader를 import
+  // AppHeader를 import
 
 const LoginPage = () => {
   return (

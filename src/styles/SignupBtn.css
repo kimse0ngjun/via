@@ -1,72 +1,214 @@
+/* 기본 스타일 */
+* {
+  box-sizing: border-box;
+}
+
+/* Box 부분 스타일 */
+.ant-layout-header {
+  background-color: white;
+}
+
 .box {
-    border: none;
-    background: none;
-    padding: 0;
-    cursor: pointer;
-  }
-  
-  .signup-btn {
-    margin-top: 39px;
-    margin-left: 1267px;
-    height: 52px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 131px;
-  }
-  
-  .signup-btn:focus {
-    outline: none;
-  }
-  
-  .overlap-group {
-    background-image: url(../assets/rectangle-1.svg);
-    background-size: 100% 100%;
-    height: 52px;
-    position: relative;
-    width: 129px;
-    color: black; /* 기본 색상 설정 */
-  }
-  
-  .signup-btn:hover .overlap-group {
-    color: #7A3E9D; /* 마우스 오버 시 색상 변경 */
-  }
-  
-  .overlap {
-    background-color: #ffffff;
-    border-radius: 20.5px / 20.51px;
-    height: 41px;
-    left: 84px;
-    position: absolute;
-    top: 6px;
-    width: 41px;
-  }
-  
-  .vuesax-linear-arrow {
-    height: 24px !important;
-    left: 9px !important;
-    position: absolute !important;
-    top: 8px !important;
-    width: 24px !important;
-    transition: color 0.3s ease; /* 색상 변화에 부드러운 전환 추가 */
-    color: black; /* 기본 색상 설정 */
-  }
-  
-  .vuesax-linear-arrow:hover {
-    color: #7A3E9D; /* 마우스 오버 시 SVG 색상 변경 */
-  }
-  
-  .text-wrapper {
-    color: #000000;
-    font-family: "Inter-MediumItalic", Helvetica;
-    font-size: 19px;
-    font-style: italic;
-    font-weight: 500;
-    left: 11px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 15px;
-    width: 63px;
-  }
-  
+  height: 64px;
+  width: 1281px;
+  position: relative;
+}
+
+.box .header {
+  background-color: transparent;
+  height: 64px;
+  left: 0;
+  position: fixed;
+  top: 33px;
+  width: 1283px;
+}
+
+.box .overlap {
+  background-image: url(../assets/rectangle-15.png);
+  background-size: 100% 100%;
+  height: 64px;
+  position: relative;
+  width: 1281px;
+  margin-left: 100px;
+  margin-top: 33px;
+}
+
+.box .login-btn {
+  all: unset;
+  box-sizing: border-box;
+  height: 23px;
+  left: 1089px;
+  position: absolute;
+  top: 20px;
+  width: 46px;
+}
+
+.box .text-wrapper {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+}
+
+.box .signup-btn {
+  height: 52px;
+  left: 1148px;
+  position: absolute;
+  top: 6px;
+  width: 131px;
+}
+
+.box .overlap-group {
+  background-image: url(../assets/rectangle-1.svg);
+  background-size: 100% 100%;
+  height: 52px;
+  position: relative;
+  width: 129px;
+}
+
+.box .vuesax-linear-arrow-wrapper {
+  background-color: #ffffff;
+  border-radius: 20.5px / 20.51px;
+  height: 41px;
+  left: 84px;
+  position: absolute;
+  top: 6px;
+  width: 41px;
+}
+
+.box .vuesax-linear-arrow {
+  height: 24px !important;
+  left: 9px !important;
+  position: absolute !important;
+  top: 8px !important;
+  width: 24px !important;
+}
+
+.box .div {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 11px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 15px;
+  width: 63px;
+}
+
+.box .line {
+  height: 34px;
+  left: 1077px;
+  object-fit: cover;
+  position: absolute;
+  top: 14px;
+  width: 1px;
+}
+
+.box .VIA-com {
+  height: 19px;
+  left: 37px;
+  position: absolute;
+  top: 24px;
+  width: 98px;
+}
+
+.box .navbar {
+  height: 29px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%); /* 중앙 정렬 */
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.box .text-wrapper-2 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 35px;
+}
+
+.box .text-wrapper-3 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 92px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 35px;
+}
+
+.box .vector {
+  background-image: url("../assets/vector-2.png"); /* 기본 이미지 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 24px; /* 이미지 크기 */
+  height: 24px;
+  display: inline-block;
+}
+
+.box .vector:hover {
+  background-image: url("../assets/vector-1.png"); /* 마우스 오버 시 이미지 변경 */
+}
+
+.box .text-wrapper-4 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 184px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 74px;
+}
+
+.box .img {
+  height: 7px;
+  left: 259px;
+  position: absolute;
+  top: 23px;
+  width: 7px;
+}
+
+.box .text-wrapper-5 {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  left: 315px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 74px;
+}

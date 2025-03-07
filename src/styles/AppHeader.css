@@ -2,10 +2,12 @@
 * {
   box-sizing: border-box;
 }
+
 /* Box 부분 스타일 */
-.ant-layout-header{
+.ant-layout-header {
   background-color: white;
 }
+
 .box {
   height: 64px;
   width: 1281px;
@@ -124,6 +126,8 @@
   position: absolute;
   top: 20px;
   width: 404px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .box .text-wrapper-2 {
@@ -157,11 +161,16 @@
 }
 
 .box .vector {
-  height: 7px;
-  left: 128px;
-  position: absolute;
-  top: 23px;
-  width: 7px;
+  background-image: url("../assets/vector-2.png"); /* 기본 이미지 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 8px; /* 이미지 크기 */
+  height: 8px;
+  display: inline-block;
+}
+
+.box .vector:hover {
+  background-image: url("../assets/vector-1.png"); /* 마우스 오버 시 이미지 변경 */
 }
 
 .box .text-wrapper-4 {
@@ -202,18 +211,28 @@
   width: 74px;
 }
 
-.box .vector-2 {
-  height: 7px;
-  left: 390px;
+.box .navbar {
+  height: 29px;
   position: absolute;
-  top: 23px;
-  width: 7px;
+  width: 450px;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%); /* 중앙 정렬 */
+  display: flex;
+  justify-content: space-between;
 }
 
-.box .vector-3 {
-  height: 7px;
-  left: 36px;
-  position: absolute;
-  top: 23px;
-  width: 7px;
+.box .nav-item {
+  display: flex;
+  align-items: center;
+  margin: 0 10px; /* 아이템 간 간격 */
+}
+
+.box .nav-text {
+  color: #000000;
+  font-family: "Inter-MediumItalic", Helvetica;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  margin-right: 8px; /* 텍스트와 아이콘 간의 간격 */
 }
