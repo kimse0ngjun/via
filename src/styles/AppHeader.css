@@ -1,52 +1,68 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
+
 .app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 40px;
-    border: 1px solid #000;
-    background-color: white !important;
-    margin: 0 auto;
-    height: 64px;
-    width: 1282px;
-    flex-shrink: 0;
-    margin: 33px auto;
-  }
-  
-  .logo {
-    color: #AA60C8;
-    font-family: Inter;
-    font-size: 25px;
-    font-style: italic;
-    font-weight: 500;
-    line-height: normal;
-  }
-  
-  .menu {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
-    max-width: 370px;
-    background-color: white;
-    margin-left: 50px;
-  }
-  
-  .menu .ant-menu-item {
-    color: black !important; /* 메뉴 글씨 색상 */
-    font-size: 16px; /* 글씨 크기 */
-    height: 40px; /* 높이 조절 */
-    line-height: 40px; /* 텍스트 정렬 */
-    padding: 0 15px; /* 좌우 간격 */
-  }
-  
-  .menu .ant-menu-item:hover {
-    color: #7A3E9D !important; /* 메뉴 호버 시 색상 */
-  }
-  
-  .menu .ant-menu-item-selected::after {
-    border-bottom-color: #7A3E9D !important; /* 선택된 메뉴 밑줄 색상 변경 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  border: 1px solid #000;
+  background-color: white !important;
+  margin: 0 auto;
+  height: 64px;
+  width: 1282px;
+  flex-shrink: 0;
+  margin: 33px auto;
+  position: absolute; /* 수정: absolute로 변경하여 특정 위치에 배치 */
+  top: 0; /* 상단에 고정 */
+  left: 0; /* 왼쪽에 고정 */
+  right: 0; /* 오른쪽에 고정 */
+  z-index: 1000; /* 다른 콘텐츠보다 위에 표시 */
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;  /* 오른쪽 정렬 */
+}
+
+.auth-button {
+  margin-right: 110px;
+}
+
+.logo {
+  color: #AA60C8;
+  font-family: Inter;
+  font-size: 25px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.menu {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  max-width: 370px;
+  background-color: white;
+  margin-left: 50px;
+}
+
+.menu .ant-menu-item {
+  color: black !important; /* 메뉴 글씨 색상 */
+  font-size: 16px; /* 글씨 크기 */
+  height: 40px; /* 높이 조절 */
+  line-height: 40px; /* 텍스트 정렬 */
+  padding: 0 15px; /* 좌우 간격 */
+}
+
+.menu .ant-menu-item:hover {
+  color: #7A3E9D !important; /* 메뉴 호버 시 색상 */
+}
+
+.menu .ant-menu-item-selected::after {
+  border-bottom-color: #7A3E9D !important; /* 선택된 메뉴 밑줄 색상 변경 */
 }
 
 .menu .ant-menu-item::after {
@@ -58,19 +74,6 @@
   border-bottom-color: #7A3E9D !important; /* 호버 시 보라색 밑줄 */
 }
 
-
-/* 기본 메뉴 항목 밑줄 제거 */
-.menu .ant-menu-item::after {
-  border-bottom: 2px solid transparent !important;
-  transition: border-bottom 0.3s ease-in-out;
-}
-
-/* 호버 시 밑줄 색상 변경 */
-.menu .ant-menu-item:hover::after {
-  border-bottom-color: #7A3E9D !important; /* 호버 시 보라색 밑줄 */
-}
-
-/* 클릭 후 선택된 메뉴 항목의 글자 색상과 밑줄 색상 변경 */
 .menu .ant-menu-item-selected {
   color: #7A3E9D !important; /* 클릭한 항목의 글자 색상 */
 }

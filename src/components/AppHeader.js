@@ -1,5 +1,6 @@
 import React from "react";
 import { Layout, Menu, Button } from "antd";
+import SignupBtn from "./SignupBtn";
 import "../styles/AppHeader.css";
 
 const { Header } = Layout;
@@ -15,12 +16,10 @@ const AppHeader = () => {
         <Menu.Item key="4">상담기록</Menu.Item>
       </Menu>
       <div className="auth-buttons">
-        <Button type="primary" className="auth-button" style={{ marginRight: "10px" }}>
+        <Button type="primary" className="auth-button">
           로그인
         </Button>
-        <Button type="default" className="auth-button">
-          회원가입
-        </Button>
+        <SignupBtn />
       </div>
     </Header>
   );
