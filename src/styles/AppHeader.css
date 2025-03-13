@@ -4,7 +4,7 @@
 }
 
 /* Box 부분 스타일 */
-.ant-layout-header {
+.ant-layout-header.header {
   background-color: white;
 }
 

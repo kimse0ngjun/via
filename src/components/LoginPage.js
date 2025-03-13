@@ -1,13 +1,23 @@
-// src/components/LoginPage.js
+/** @jsxImportSource @emotion/react */
 import React from 'react';
-  // AppHeader를 import
+import { Input, Button } from 'antd';
+import * as styles from '../styles/LoginPage.styles';
 
 const LoginPage = () => {
   return (
-    <div>
-      
-      <h1>로그인 페이지</h1>
-      {/* 로그인 관련 내용 */}
+    <div css={styles.container}>
+      <h2 css={styles.title}>login</h2>
+      <div css={styles.form}>
+        <div css={styles.row}>
+          <label css={styles.label}>ID</label>
+          <Input placeholder="이메일을 입력하세요." css={styles.input} />
+        </div>
+        <div css={styles.row}>
+          <label css={styles.label}>PW</label>
+          <Input.Password placeholder="비밀번호를 입력하세요." css={styles.input} />
+        </div>
+        <Button css={styles.loginButton}>LOGIN</Button>
+      </div>
     </div>
   );
 };
