@@ -1,13 +1,45 @@
-*{
-    box-sizing: border-box;
-}
-
-.question {
+.main-page {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 100vh;
+  }
+  
+  .question {
     text-align: center;
+  }
+  
+  .start-btn {
+    background-color: #a06baf;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .start-btn:hover {
+    background-color: #8b5494;
+  }
+  
+  .input-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .input-section textarea {
+    padding: 10px;
+    font-size: 16px;
+    width: 600px;
+    min-height: 50px; /* 기본 최소 높이 */
+    max-height: 300px; /* 최대 높이 설정 */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* 크기 조정 제한 */
+    overflow-y: hidden; /* 세로로 넘칠 때 숨기기 */
   }
   
