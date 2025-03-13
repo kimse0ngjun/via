@@ -17,13 +17,14 @@ const LoginPage = () => {
           <label css={styles.label}>비밀번호</label>
           <Input.Password placeholder="비밀번호를 입력하세요." css={styles.input} />
         </div>
-        <Button css={styles.loginButton}>LOGIN</Button>
-        {/* 비밀번호 찾기 링크 추가 */}
         <div css={styles.passwordReset}>
           <Link to="/find-password" css={styles.passwordLink}>
             비밀번호 찾기
           </Link>
         </div>
+        <Button css={styles.loginButton}>LOGIN</Button>
+        {/* 비밀번호 찾기 링크 추가 */}
+        
       </div>
     </div>
   );

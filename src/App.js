@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/" element={<MainPage />} />  {/* MainPage로 변경 */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/find-password" component={FindPasswordPage} />
+        <Route path="/find-password" element={<FindPasswordPage />} />
       </Routes>
     </Router>
   );

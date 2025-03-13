@@ -52,7 +52,7 @@ export const input = css`
   }
 `;
 
-export const loginButton = css`
+export const findButton = css`
   margin-top: 20px;
   width: 100%;
   background-color: #a06baf;
@@ -72,12 +72,3 @@ export const loginButton = css`
     color:white;
   }
 `;
-export const passwordReset = css`
-  margin-top: 10px;
-  text-align: center;
-`;
-
-export const passwordLink = css`
-  color: black;
-  text-decoration: none;
-  `;
