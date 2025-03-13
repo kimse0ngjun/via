@@ -120,104 +120,14 @@
   width: 98px;
 }
 
-.box .navbar {
-  height: 29px;
-  left: 230px;
-  position: absolute;
-  top: 20px;
-  width: 404px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.box .text-wrapper-2 {
-  color: #000000;
-  font-family: "Inter-MediumItalic", Helvetica;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 500;
-  left: 0;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-  width: 35px;
-}
-
-.box .text-wrapper-3 {
-  color: #000000;
-  font-family: "Inter-MediumItalic", Helvetica;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 500;
-  left: 92px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-  width: 35px;
-}
-
-.box .vector {
-  background-image: url("../assets/vector-2.png"); /* 기본 이미지 */
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 8px; /* 이미지 크기 */
-  height: 8px;
-  display: inline-block;
-}
-
-.box .vector:hover {
-  background-image: url("../assets/vector-1.png"); /* 마우스 오버 시 이미지 변경 */
-}
-
-.box .text-wrapper-4 {
-  color: #000000;
-  font-family: "Inter-MediumItalic", Helvetica;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 500;
-  left: 184px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-  width: 74px;
-}
-
-.box .img {
-  height: 7px;
-  left: 259px;
-  position: absolute;
-  top: 23px;
-  width: 7px;
-}
-
-.box .text-wrapper-5 {
-  color: #000000;
-  font-family: "Inter-MediumItalic", Helvetica;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 500;
-  left: 315px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-  width: 74px;
-}
-
+/* 네비게이션 스타일 */
 .box .navbar {
   height: 29px;
   position: absolute;
   width: 450px;
   top: 20px;
   left: 50%;
-  transform: translateX(-50%); /* 중앙 정렬 */
+  transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
 }
@@ -225,7 +135,9 @@
 .box .nav-item {
   display: flex;
   align-items: center;
-  margin: 0 10px; /* 아이템 간 간격 */
+  margin: 0 5px;
+  position: relative;
+  padding-bottom: 5px; /* 밑줄 위치 조정 */
 }
 
 .box .nav-text {
@@ -234,5 +146,26 @@
   font-size: 19px;
   font-style: italic;
   font-weight: 500;
-  margin-right: 8px; /* 텍스트와 아이콘 간의 간격 */
+  text-decoration: none;
+  position: relative;
+}
+
+/* 마우스 오버 및 클릭 시 밑줄 효과 */
+.box .nav-text::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 15px;
+  width: 0;
+  height: 2px;
+  background-color: #a06baf; /* 원하는 색상으로 변경 가능 */
+  transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+/* 클릭된 nav-item에만 밑줄 유지 */
+.box .nav-item.active .nav-text::after,
+.box .nav-text:hover::after,
+.box .nav-text:active::after {
+  width: 100%;
+  left: 0;
 }

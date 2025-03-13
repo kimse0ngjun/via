@@ -13,18 +13,18 @@ const SignUpPage = () => {
 
   return (
     <div css={styles.container}>
-      <div css={styles.title}>회원가입</div>
+      <div css={styles.title}>SIGNUP</div>
       <form css={styles.form}>
         <div css={styles.row}>
           <label css={styles.label}>이름</label>
           <input css={styles.input} type="text" placeholder="이름을 입력하세요" />
         </div>
         <div css={styles.row}>
-          <label css={styles.label}>ID</label>
+          <label css={styles.label}>이메일</label>
           <input css={styles.input} type="email" placeholder="example@via.com" />
         </div>
         <div css={styles.row}>
-          <label css={styles.label}>PW</label>
+          <label css={styles.label}>비밀번호</label>
           <input 
             css={styles.input} 
             type="password" 
@@ -39,7 +39,7 @@ const SignUpPage = () => {
           연속 3자 이상 동일한 문자/숫자 제외
         </div>
         <div css={styles.row}>
-          <label css={styles.label}>PW 확인</label>
+          <label css={styles.label}>비밀번호 확인</label>
           <input 
             css={styles.input} 
             type="password" 

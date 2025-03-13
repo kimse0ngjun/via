@@ -19,27 +19,25 @@ export const title = css`
 export const form = css`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  width: 300px;
 `;
 
 export const row = css`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
 `;
 
 export const label = css`
   font-weight: bold;
-  font-style: italic;
-  width: 80px;
-  text-align: right;
+  margin-bottom: 5px;
 `;
 
 export const input = css`
-  width: 250px;
+  width: 100%;
   border: none;
   border-bottom: 1px solid #a06baf;
-  padding: 5px;
+  padding: 8px;
   font-size: 16px;
 
   &:focus {

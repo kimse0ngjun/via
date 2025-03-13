@@ -29,15 +29,12 @@ export const form = css`
 
 export const row = css`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
 `;
 
 export const label = css`
   font-weight: bold;
-  font-style: italic;
-  width: 40px;
-  text-align: right;
+  width: 60px;
 `;
 
 export const input = css`
