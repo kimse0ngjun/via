@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
+import { Input, Button } from 'antd';
 import * as styles from '../styles/SignUpPage.styles';
 
 const SignUpPage = () => {
@@ -25,10 +26,9 @@ const SignUpPage = () => {
         </div>
         <div css={styles.row}>
           <label css={styles.label}>비밀번호</label>
-          <input 
-            css={styles.input} 
-            type="password" 
-            placeholder="비밀번호를 입력하세요" 
+          <Input.Password
+            css={styles.input}
+            placeholder="비밀번호를 입력하세요"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -40,10 +40,9 @@ const SignUpPage = () => {
         </div>
         <div css={styles.row}>
           <label css={styles.label}>비밀번호 확인</label>
-          <input 
-            css={styles.input} 
-            type="password" 
-            placeholder="비밀번호를 다시 입력하세요" 
+          <Input.Password
+            css={styles.input}
+            placeholder="비밀번호를 다시 입력하세요"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />

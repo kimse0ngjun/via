@@ -70,4 +70,14 @@ export const loginButton = css`
   &:hover {
     background-color: #8c5a9d;
   }
+    
 `;
+export const passwordReset = css`
+  margin-top: 10px;
+  text-align: center;
+`;
+
+export const passwordLink = css`
+  color: #0066cc;
+  text-decoration: none;
+  `;

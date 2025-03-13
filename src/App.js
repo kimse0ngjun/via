@@ -4,6 +4,7 @@ import AppHeader from "./components/AppHeader";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import MainPage from "./components/MainPage";  // 추가
+import FindPasswordPage from './components/FIndPasswordPage';
 import 'antd/dist/antd.css';
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<MainPage />} />  {/* MainPage로 변경 */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/find-password" component={FindPasswordPage} />
       </Routes>
     </Router>
   );
