@@ -6,11 +6,13 @@
 /* Box 부분 스타일 */
 .ant-layout-header.header {
   background-color: white;
+  width: 100%;
+  border-bottom: 1px solid black;
 }
 
 .box {
   height: 64px;
-  width: 1281px;
+  width: 100%;
 }
 
 .box .header {
@@ -18,94 +20,61 @@
   height: 64px;
   left: 0;
   position: fixed;
-  top: 33px;
-  width: 1283px;
 }
 
 .box .overlap {
-  background-image: url(../assets/rectangle-15.png);
   background-size: 100% 100%;
   height: 64px;
   position: relative;
   width: 1281px;
   margin-left: 100px;
-  margin-top: 33px;
+  border-bottom: 1px solid black;
 }
 
 .box .login-btn {
-  all: unset;
-  box-sizing: border-box;
-  height: 23px;
-  left: 1089px;
+  height: 40px;
+  right: 130px;
   position: absolute;
-  top: 20px;
-  width: 46px;
-}
-
-.box .text-wrapper {
-  color: #000000;
-  font-family: "Inter-MediumItalic", Helvetica;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 500;
-  left: 0;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 0;
+  top: 10px;
+  width: 120px;
 }
 
 .box .signup-btn {
-  height: 52px;
-  left: 1148px;
+  height: 40px;
+  right: 0;
   position: absolute;
-  top: 6px;
-  width: 131px;
+  margin-top: 10px;
+  width: 120px;
 }
 
 .box .overlap-group {
-  background-image: url(../assets/rectangle-1.svg);
+  background-image: url(../assets/rectangle_2.svg);
   background-size: 100% 100%;
-  height: 52px;
+  color: #000000;
+  height: 40px;
   position: relative;
-  width: 129px;
-}
-
-.box .vuesax-linear-arrow-wrapper {
-  background-color: #ffffff;
-  border-radius: 20.5px / 20.51px;
-  height: 41px;
-  left: 84px;
-  position: absolute;
-  top: 6px;
-  width: 41px;
-}
-
-.box .vuesax-linear-arrow {
-  height: 24px !important;
-  left: 9px !important;
-  position: absolute !important;
-  top: 8px !important;
-  width: 24px !important;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .box .div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #000000;
-  font-family: "Inter-MediumItalic", Helvetica;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 500;
-  left: 11px;
+  font-size: 15px;
+  text-align: center;
   letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 15px;
-  width: 63px;
+  height: 40px;
+  width: 92px;
+  position: relative;
 }
 
 .box .line {
   height: 34px;
-  left: 1077px;
+  right: 260px;
   object-fit: cover;
   position: absolute;
   top: 14px;
@@ -114,7 +83,6 @@
 
 .box .VIA-com {
   height: 19px;
-  left: 37px;
   position: absolute;
   top: 24px;
   width: 98px;
@@ -137,7 +105,7 @@
   align-items: center;
   margin: 0 5px;
   position: relative;
-  padding-bottom: 5px; /* 밑줄 위치 조정 */
+  padding-bottom: 5px;
 }
 
 .box .nav-text {
@@ -158,7 +126,7 @@
   bottom: 15px;
   width: 0;
   height: 2px;
-  background-color: #a06baf; /* 원하는 색상으로 변경 가능 */
+  background-color: #a06baf;
   transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
 }
 
@@ -168,4 +136,4 @@
 .box .nav-text:active::after {
   width: 100%;
   left: 0;
-} 
+}
