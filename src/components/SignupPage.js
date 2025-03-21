@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
-import { Input, Button } from 'antd';
+import { Input } from 'antd';
 import * as styles from '../styles/SignUpPage.styles';
 
 const SignUpPage = () => {

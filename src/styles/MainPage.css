@@ -11,18 +11,32 @@
   }
   
   .start-btn {
-    background-color: #a06baf;
-    color: white;
+    background-color: #8809FF33;
+    color: black;
     padding: 10px 20px;
-    border: none;
+    height: 40px;
+    width: fit-content;
+    border: 1px solid black;
     border-radius: 30px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 20px;
-  }
+    text-align: center;
+    
+    /* 텍스트 중앙 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 화면 중앙 정렬 */
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
   
   .start-btn:hover {
-    background-color: #8b5494;
+    background-color: #8809FF80;
   }
   
   .input-section {

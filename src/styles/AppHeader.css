@@ -3,6 +3,11 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 /* Box 부분 스타일 */
 .ant-layout-header.header {
   background-color: white;
@@ -43,7 +48,7 @@
   height: 40px;
   right: 0;
   position: absolute;
-  margin-top: 10px;
+  top: 10px;
   width: 120px;
 }
 
@@ -59,9 +64,11 @@
   align-items: center;
   justify-content: center;
 }
+
 .box .overlap-group:hover {
   background-color: #8809FF80;
 }
+
 .box .div {
   display: flex;
   justify-content: center;
@@ -101,6 +108,7 @@
   transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .box .nav-item {
@@ -139,4 +147,62 @@
 .box .nav-text:active::after {
   width: 100%;
   left: 0;
+}
+
+/* --- 반응형 스타일 (위치 유지, 크기만 조정) --- */
+
+/* 태블릿 (768px 이하) */
+@media (max-width: 768px) {
+  .box .overlap {
+    width: calc(100% - 200px); /* 화면 크기에 따라 너비 조정 */
+    margin-left: 50px;
+  }
+
+  .box .navbar {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+
+  .box .nav-item {
+    font-size: 16px;
+    padding-bottom: 3px;
+  }
+
+  .box .login-btn,
+  .box .signup-btn {
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+  }
+}
+
+/* 모바일 (480px 이하) */
+@media (max-width: 480px) {
+  .box .overlap {
+    width: calc(100% - 100px); /* 화면 크기에 따라 너비 조정 */
+    margin-left: 20px;
+  }
+
+  .box .navbar {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .box .nav-item {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+  .box .login-btn,
+  .box .signup-btn {
+    width: 90px;
+    height: 35px;
+    font-size: 13px;
+  }
+
+  .box .line {
+    display: none;
+  }
 }
