@@ -3,17 +3,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
-import MainPage from "./components/MainPage";  // 추가
+import MainPage from "./components/MainPage";
 import MyPage from "./components/MyPage";
 import FindPasswordPage from './components/FIndPasswordPage';
 import 'antd/dist/antd.css';
 
 const App = () => {
   return (
-    <Router>
+    <Router> {/* Router는 여기서만 사용 */}
       <AppHeader />
       <Routes>
-        <Route path="/" element={<MainPage />} />  {/* MainPage로 변경 */}
+        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/find-password" element={<FindPasswordPage />} />
