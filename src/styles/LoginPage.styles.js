@@ -55,9 +55,10 @@ export const input = css`
 export const loginButton = css`
   margin-top: 20px;
   width: 100%;
-  background-color: #a06baf;
-  color: white;
+  background-color: #8809FF33;
+  color: black;
   border: none;
+  border: 1px solid black;
   border-radius: 20px;
   padding: 10px;
   font-weight: bold;
@@ -68,10 +69,10 @@ export const loginButton = css`
   font-size: 16px;
 
   &:hover {
-    background-color: #8c5a9d;
-    color:white;
+    background-color: #8809FF80;
   }
 `;
+
 export const passwordReset = css`
   margin-top: 10px;
   text-align: center;

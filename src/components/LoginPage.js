@@ -1,10 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import { Input, Button } from 'antd';
-import { Link } from 'react-router-dom';  // react-router-dom에서 Link를 임포트
+import { Input } from 'antd';
+import { Link } from 'react-router-dom';
 import * as styles from '../styles/LoginPage.styles';
 
 const LoginPage = () => {
+  const handleLogin = () => {
+    console.log("로그인 버튼 클릭됨!");
+    // 로그인 로직 추가 가능
+  };
+
   return (
     <div css={styles.container}>
       <h2 css={styles.title}>LOGIN</h2>
@@ -22,9 +27,9 @@ const LoginPage = () => {
             비밀번호 찾기
           </Link>
         </div>
-        <Button css={styles.loginButton}>LOGIN</Button>
-        {/* 비밀번호 찾기 링크 추가 */}
-        
+        <button css={styles.loginButton} onClick={handleLogin}>
+          LOGIN
+        </button>
       </div>
     </div>
   );
