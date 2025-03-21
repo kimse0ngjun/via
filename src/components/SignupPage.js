@@ -6,6 +6,7 @@ import * as styles from '../styles/SignUpPage.styles';
 const SignUpPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [age, setAge] = useState(''); // 나이 상태 추가
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -19,6 +20,17 @@ const SignUpPage = () => {
         <div css={styles.row}>
           <label css={styles.label}>이름</label>
           <input css={styles.input} type="text" placeholder="이름을 입력하세요" />
+        </div>
+        {/* 나이 입력칸 추가 */}
+        <div css={styles.row}>
+          <label css={styles.label}>나이</label>
+          <input
+            css={styles.input}
+            type="number"
+            placeholder="나이를 입력하세요"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
         </div>
         <div css={styles.row}>
           <label css={styles.label}>이메일</label>
@@ -47,6 +59,7 @@ const SignUpPage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
+        
         <button css={styles.signUpButton} onClick={handleSignUp}>회원가입</button>
       </form>
     </div>
