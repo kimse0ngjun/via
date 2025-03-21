@@ -76,9 +76,13 @@ export const loginButton = css`
 export const passwordReset = css`
   margin-top: 10px;
   text-align: center;
+  
 `;
 
 export const passwordLink = css`
   color: black;
   text-decoration: none;
+  &:hover{
+    color : #8809FF80;
+  }
   `;

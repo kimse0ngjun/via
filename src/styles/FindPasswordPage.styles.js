@@ -55,10 +55,11 @@ export const input = css`
 export const findButton = css`
   margin-top: 20px;
   width: 100%;
-  background-color: #a06baf;
-  color: white;
+  background-color: #8809FF33;
+  color: black;
   border: none;
   border-radius: 20px;
+  border: 1px solid black;
   padding: 10px;
   font-weight: bold;
   cursor: pointer;
@@ -68,7 +69,7 @@ export const findButton = css`
   font-size: 16px;
 
   &:hover {
-    background-color: #8c5a9d;
+    background-color: #8809FF80;
     color:white;
   }
 `;

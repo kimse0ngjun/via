@@ -53,12 +53,15 @@
   color: #000000;
   height: 40px;
   position: relative;
+  border-radius: 30px;
   width: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
+.box .overlap-group:hover {
+  background-color: #8809FF80;
+}
 .box .div {
   display: flex;
   justify-content: center;

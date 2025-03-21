@@ -47,7 +47,7 @@ const SignUpPage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <button css={styles.signUpButton} onClick={handleSignUp}>SIGNUP</button>
+        <button css={styles.signUpButton} onClick={handleSignUp}>회원가입</button>
       </form>
     </div>
   );

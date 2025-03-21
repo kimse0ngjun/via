@@ -56,19 +56,20 @@ export const warningText = css`
 export const signUpButton = css`
   margin-top: 20px;
   width: 100%;
-  background-color: #a06baf;
-  color: white;
+  background-color: #8809FF33;
+  color: black;
   border: none;
   border-radius: 20px;
   padding: 10px;
   font-weight: bold;
   cursor: pointer;
+  border:1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 16px;
 
   &:hover {
-    background-color: #8c5a9d;
+    background-color: #8809FF80;
   }
 `;

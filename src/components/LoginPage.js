@@ -28,7 +28,7 @@ const LoginPage = () => {
           </Link>
         </div>
         <button css={styles.loginButton} onClick={handleLogin}>
-          LOGIN
+          로그인
         </button>
       </div>
     </div>
