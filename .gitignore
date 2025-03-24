@@ -1,0 +1,8 @@
+# 환경 변수 파일 (보안 유지)
+.env
+node_modules
+requirements.txt
+venv
+static
+__init__.py
+__pycache__
