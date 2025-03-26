@@ -14,3 +14,7 @@ db = client[DATABASE_NAME]
 
 # 컬렉션 선택
 users_collection = db["users"]
+
+# 이메일로 사용자 조회
+async def get_user_by_email(email: str):
+    return await users_collection.find_one({"email": email})
