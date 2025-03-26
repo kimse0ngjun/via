@@ -51,6 +51,17 @@ def create_reset_token(email: str) -> str:
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
     return token
 
+# 비밀번호 재설정 토큰 검증
+def verify_reset_token(token: str):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        # 토큰 만료 시간 체크
+        if datetime.utcnow() > datetime.utcfromtimestamp(payload["exp"]):
+            return None  # 만료된 토큰
+        return payload
+    except JWTError:
+        return None  # 유효하지 않은 토큰
+
 # 비밀번호 재설정 이메일 전송
 def send_reset_email(email: str, token: str):
     reset_url = f"http://127.0.0.1:8000/api/auth/reset-password?token={token}"
@@ -89,3 +100,4 @@ def send_reset_email(email: str, token: str):
         print(f"이메일 전송 성공: {email}")
     except Exception as e:
         print(f"이메일 전송 오류: {e}")
+

@@ -7,7 +7,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from app.database import users_collection, get_user_by_email
 from app.models.auth import RegisterRequest, LoginRequest
-from app.utils.security import hash_password, verify_password, create_jwt_token, verify_jwt_token, create_reset_token, send_reset_email
+from app.utils.security import hash_password, verify_password, create_jwt_token, verify_jwt_token, create_reset_token, send_reset_email, verify_reset_token
 from bson import ObjectId
 from bson import datetime as bson_datetime
 from datetime import datetime
@@ -48,6 +48,7 @@ async def register_user(data: RegisterRequest):
     hashed_password = hash_password(data.password)
     new_user = {
         "name": data.name,
+        "age": data.age,
         "email": data.email,
         "hashed_password": hashed_password,
         "provider": "local",
@@ -122,6 +123,18 @@ async def password_reset_request(request: PasswordResetRequest, background_tasks
 
     return {"message": "비밀번호 재설정 이메일을 보냈습니다."}
 
+@router.get("/reset-password")
+async def get_reset_password(token: str):
+    # 토큰을 확인하고 유효한지 검증
+    user_email = verify_reset_token(token)  # 토큰 검증 후 이메일 반환
+
+    if not user_email:
+        raise HTTPException(status_code=400, detail="유효하지 않은 토큰입니다.")
+
+    # 비밀번호 변경 폼을 사용자에게 전달 (간단히 확인만 하고 포워딩하는 예시)
+    return {"message": "비밀번호 변경 페이지", "email": user_email}
+
+
 # 비밀번호 재설정 
 @router.post("/reset-password")
 async def reset_password(request: PasswordResetConfirm):
@@ -142,12 +155,20 @@ async def reset_password(request: PasswordResetConfirm):
 
     # 비밀번호 해싱 후 업데이트
     hashed_password = hash_password(new_password)
-    await users_collection.update_one(
+    update_result = await users_collection.update_one(
         {"_id": user["_id"]},
-        {"$set": {"password": hashed_password}, "$unset": {"reset_token": "", "reset_token_expiration": ""}}
+        {"$set": {"hashed_password": hashed_password}, "$unset": {"reset_token": "", "reset_token_expiration": ""}}
     )
 
-    return {"message": "비밀번호가 성공적으로 변경되었습니다."}
+    # 비밀번호 변경 후 새로운 토큰 생성
+    new_token = create_jwt_token({"sub": str(user["_id"]), "user_id": str(user["_id"])})
+
+    return {
+        "message": "비밀번호가 성공적으로 변경되었습니다.",
+        "access_token": new_token,
+        "token_type": "bearer",
+        "user": {"name": user["name"], "email": user["email"]}
+    }
 
 # 구글 로그인 요청
 @router.get("/google")
