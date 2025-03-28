@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 # 학생 모델
@@ -29,8 +29,8 @@ class Consultation(BaseModel):
     date: datetime
     interest: str
     career_goal: str
-    consult_purpose: str
-    consult_content: str
+    consult_purpose: str # 상담 목적
+    consult_content: str # 상담 내용용
 
     # target_company: str
     # save_history: bool = True

@@ -1,7 +1,7 @@
 import openai
 from fastapi import APIRouter
 from database import db
-from models import ChatCreate
+from app.models.chat import ChatCreate
 from app.core.config import settings
 import uuid
 

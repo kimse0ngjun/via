@@ -15,6 +15,7 @@ db = client[DATABASE_NAME]
 # 컬렉션 선택
 users_collection = db["users"]
 students_collection = db["students"]
+interests_collection = db["interests"]
 consultations_collection = db["consultations"]
 
 # 이메일로 사용자 조회
