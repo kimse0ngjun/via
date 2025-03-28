@@ -1,15 +1,18 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import List
 
 # 학생 모델
-class StudentCreate(BaseModel):
+class Student(BaseModel):
     user_id: str
     age: int
     gender: str
-    grade: int
-    interest_IT: str
-    job: str
-    qualifications: List[str]
+    email: EmailStr
+    grade: str
+    major: str
+    certifications: List[str]
     interest: str
-    target_company: str
-    save_history: bool = True
+    role: str
+    # target_company: str
+    # save_history: bool = True
+    # interest_IT: str
+    # job: str
