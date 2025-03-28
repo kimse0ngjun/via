@@ -1,0 +1,19 @@
+/* src/styles/MyProfile.css */
+
+.my-profile-layout {
+  min-height: 100vh;
+}
+
+.my-profile-content-layout {
+  padding: 0 24px 24px;
+}
+
+.my-profile-content {
+  padding: 24px;
+  margin: 0;
+  min-height: 280px;
+}
+
+.my-profile-container {
+  /* 필요에 따라 추가적인 스타일을 여기에 작성 */
+}
