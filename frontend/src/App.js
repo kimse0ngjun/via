@@ -7,7 +7,11 @@ import MainPage from "./components/MainPage";
 import MyPage from "./components/MyPage";
 import FindPasswordPage from './components/FIndPasswordPage';
 import SignupSuccessPage from './components/SignupSuccessPage';
-import 'antd/dist/antd.css';
+import MyProfile from "./components/MyProfile";
+import EditProfile from "./components/EditProfile";
+import Certifications from "./components/Certifications";
+import 'antd/dist/reset.css';
+
 
 const App = () => {
   return (
@@ -20,6 +24,9 @@ const App = () => {
         <Route path="/signupsuccess" element={<SignupSuccessPage />} />
         <Route path="/find-password" element={<FindPasswordPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/certifications" element={<Certifications />} />
       </Routes>
     </Router>
   );
