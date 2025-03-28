@@ -15,6 +15,7 @@ db = client[DATABASE_NAME]
 # 컬렉션 선택
 users_collection = db["users"]
 students_collection = db["students"]
+consultations_collection = db["consultations"]
 
 # 이메일로 사용자 조회
 async def get_user_by_email(email: str):

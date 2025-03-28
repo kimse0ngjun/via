@@ -14,7 +14,6 @@ from datetime import datetime
 from app.models.auth import PasswordResetRequest, PasswordResetConfirm
 
 
-
 # 구글
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
