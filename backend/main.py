@@ -6,9 +6,9 @@ from app.routes import auth, student, chatgpt # interview
 app = FastAPI()
 
 # 라우터 등록
-app.include_router(auth.router, prefix="/api/auth")
-app.include_router(chatgpt.router, prefix="/api/chatgpt")
-app.include_router(student.router, prefix="/api/student")
+app.include_router(auth.router, prefix="/auth")
+app.include_router(chatgpt.router, prefix="/chatgpt")
+app.include_router(student.router, prefix="/student")
 # app.include_router(interview.router, prefix="/api/inteview")
 
 # 정적 파일 (favicon.ico) 서빙 설정
@@ -23,7 +23,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  # 어떤 도메인에서 요청을 허용할 것인지 설정
     allow_credentials=True,
-    allow_methods=["*"],  # 모든 HTTP 메서드 허용 (GET, POST, PUT 등)
+    allow_methods=["*"],  # 모든 HTTP 메서드 허용 
     allow_headers=["*"],  # 모든 헤더 허용
 )
 

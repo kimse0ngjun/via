@@ -14,9 +14,26 @@ class Student(BaseModel):
     interest: str
     role: str
 
+# 학생 정보 업데이트 모델
+class StudentUpdate(BaseModel):
+    age: Optional[int] = None
+    gender: Optional[str] = None
+    grade: Optional[str] = None
+    major: Optional[str] = None
+    certifications: Optional[List[str]] = None
+    interest: Optional[str] = None
+    role: Optional[str] = None
+
+# 마이페이지 응답 모델
+class MyPageResponse(BaseModel):
+    name: str
+    age: int
+    grade: Optional[str] = None
+    major: Optional[str] = None
+    certifications: Optional[list] = None
+
 # 흥미 모델
 class Interest(BaseModel):
-    user_id: str
     job_category: str
     study_field: str
     personal_values: str
@@ -25,12 +42,11 @@ class Interest(BaseModel):
 
 # 상담기록 모델
 class Consultation(BaseModel):
-    user_id: str
-    date: datetime
+    date: str
     interest: str
     career_goal: str
     consult_purpose: str # 상담 목적
-    consult_content: str # 상담 내용용
+    consult_content: str # 상담 내용
 
     # target_company: str
     # save_history: bool = True
