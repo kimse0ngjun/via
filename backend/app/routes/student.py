@@ -5,7 +5,7 @@ from app.database import students_collection
 router = APIRouter()
 
 # 학생 정보 등록 API
-@router.post("/students/")
+@router.post("/")
 async def create_student(student: Student):
     existing_student = await students_collection.find_one({"email": student.email})
     if existing_student:
@@ -16,7 +16,7 @@ async def create_student(student: Student):
     return {"message": "학생 정보가 성공적으로 저장되었습니다."}
 
 # 학생 정보 조회 API
-@router.get("/students/{email}")
+@router.get("/{email}")
 async def get_student(email: str):
     student = await students_collection.find_one({"email": email}, {"_id": 0})
     if not student:
@@ -24,7 +24,7 @@ async def get_student(email: str):
     return student
 
 # 학생 정보 업데이트 API
-@router.patch("/students/{email}")
+@router.patch("/{email}")
 async def update_student(email: str, student_data: StudentUpdate):
     existing_student = await students_collection.find_one({"email": email})
     if not existing_student:
@@ -39,7 +39,7 @@ async def update_student(email: str, student_data: StudentUpdate):
     return {"message": "학생 정보가 업데이트되었습니다."}
 
 # 학생 정보 삭제 API
-@router.delete("/students/{email}")
+@router.delete("/{email}")
 async def delete_student(email: str):
     result = await students_collection.delete_one({"email": email})
     if result.deleted_count == 0:
