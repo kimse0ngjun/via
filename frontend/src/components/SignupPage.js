@@ -1,33 +1,33 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
-import { Input } from 'antd';
-import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+import { Input, message, Checkbox } from 'antd'; // Checkbox 추가
+import { useNavigate } from 'react-router-dom';
 import * as styles from '../styles/SignUpPage.styles';
 
 const SignUpPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [age, setAge] = useState(''); // 나이 상태 추가
-  const [name, setName] = useState(''); // 이름 상태 추가
-  const [email, setEmail] = useState(''); // 이메일 상태 추가
-  const [message, setMessage] = useState(''); // 메시지 상태 추가
-
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const [age, setAge] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [agreeTerms, setAgreeTerms] = useState(false); // 약관 동의 상태 추가
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
-    e.preventDefault(); // 폼 기본 동작 방지
+    e.preventDefault();
 
-    console.log("회원가입 함수 실행됨"); // 함수 실행 확인
-
-    // 비밀번호 확인
     if (password !== confirmPassword) {
-      setMessage('비밀번호가 일치하지 않습니다.');
+      message.error('비밀번호가 일치하지 않습니다.');
       return;
     }
 
-    // 나이 및 이메일, 비밀번호 확인
     if (!name || !email || !password || !age) {
-      setMessage('모든 필드를 입력해 주세요.');
+      message.error('모든 필드를 입력해 주세요.');
+      return;
+    }
+
+    if (!agreeTerms) {
+      message.error('약관에 동의해야 합니다.'); // 약관 동의 체크 추가
       return;
     }
 
@@ -51,14 +51,14 @@ const SignUpPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('회원가입이 완료되었습니다.');
-        navigate('/signupsuccess'); // 성공 시 페이지 이동
+        message.success('회원가입이 완료되었습니다.');
+        navigate('/signupsuccess');
       } else {
-        setMessage(data.detail || '회원가입 실패');
+        message.error(data.detail || '회원가입 실패');
       }
     } catch (error) {
-      console.error(error); // 오류 확인을 위한 콘솔 출력
-      setMessage('서버 오류');
+      console.error(error);
+      message.error('서버 오류');
     }
   };
 
@@ -119,10 +119,16 @@ const SignUpPage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-
-        <button css={styles.signUpButton} type="submit">회원가입</button> {/* type="submit"으로 변경 */}
+        <div css={styles.row}>
+          <Checkbox
+            checked={agreeTerms}
+            onChange={(e) => setAgreeTerms(e.target.checked)}
+          >
+            약관에 동의합니다.
+          </Checkbox>
+        </div>
+        <button css={styles.signUpButton} type="submit">회원가입</button>
       </form>
-      {message && <p>{message}</p>} {/* 회원가입 결과 메시지 표시 */}
     </div>
   );
 };

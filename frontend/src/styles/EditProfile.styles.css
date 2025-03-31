@@ -1,41 +1,52 @@
 /* src/styles/EditProfile.styles.css */
+.edit-profile-layout {
+  min-height: 100vh;
+}
+
+.edit-profile-content-layout {
+  padding: 24px;
+}
+
+.edit-profile-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
 .edit-profile-container {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .edit-profile-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .edit-profile-form label {
-    font-size: 14px;
-    margin-bottom: 6px;
-    color: #555;
-  }
-  
-  .edit-profile-form input {
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .edit-profile-form button {
-    padding: 10px 15px;
-    background-color: #1890ff;
-    color: #fff;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .edit-profile-form button:hover {
-    background-color: #40a9ff;
-  }
-  
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-profile-form label {
+  margin-bottom: 5px;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-profile-form button[type="submit"] {
+  padding: 10px 15px;
+  background-color: #8809FF33;
+  color: white;
+  border: 1px solid #8809FF80; /* 보더 추가 */
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center; /* 버튼 가운데 정렬 */
+  width: fit-content; /* 버튼 내용에 맞게 너비 조정 */
+}
+
+.edit-profile-form button[type="submit"]:hover {
+  background-color: #8809FF80;
+  border: 1px solid #8809FF33; /* hover 시 보더 색상 변경 */
+}
