@@ -11,6 +11,7 @@ const SignUpPage = () => {
   const [name, setName] = useState(''); // 이름 상태 추가
   const [email, setEmail] = useState(''); // 이메일 상태 추가
   const [message, setMessage] = useState(''); // 메시지 상태 추가
+  const [loading, setLoading] = useState(false); // 로딩 상태 추가
 
   const navigate = useNavigate(); // useNavigate 훅 사용
 
@@ -40,7 +41,8 @@ const SignUpPage = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8000/register', {
+      setLoading(true); // 요청 중 로딩 상태 설정
+      const response = await fetch('http://127.0.0.1:8000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,6 +61,8 @@ const SignUpPage = () => {
     } catch (error) {
       console.error(error); // 오류 확인을 위한 콘솔 출력
       setMessage('서버 오류');
+    } finally {
+      setLoading(false); // 요청 완료 후 로딩 상태 해제
     }
   };
 
@@ -120,7 +124,7 @@ const SignUpPage = () => {
           />
         </div>
 
-        <button css={styles.signUpButton} type="submit">회원가입</button> {/* type="submit"으로 변경 */}
+        <button css={styles.signUpButton} type="submit" disabled={loading}>회원가입</button> {/* 회원가입 버튼 비활성화 */}
       </form>
       {message && <p>{message}</p>} {/* 회원가입 결과 메시지 표시 */}
     </div>

@@ -8,10 +8,18 @@ from typing import Optional
 from app.database import users_collection, get_user_by_email
 from app.models.auth import RegisterRequest, LoginRequest
 from app.utils.security import hash_password, verify_password, create_jwt_token, verify_jwt_token, create_reset_token, send_reset_email, verify_reset_token
-from bson import ObjectId
+# pymongo에서 ObjectId 임포트
+from bson import ObjectId  # 여기서 bson에서 ObjectId를 임포트
+
+# 기존 코드에서 bson의 ObjectId를 사용하는 부분
+
+
 from bson import datetime as bson_datetime
+from bson import SON  # pymongo에서 SON을 사용하려면 bson에서 가져와야 합니다.
+
 from datetime import datetime
 from app.models.auth import PasswordResetRequest, PasswordResetConfirm
+
 
 
 # 구글

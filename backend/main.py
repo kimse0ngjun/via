@@ -1,22 +1,26 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.routes.student import student_router
-from app.routes import auth, career # interview
+from fastapi.middleware.cors import CORSMiddleware
+from app.routes import auth, student
+import os
 
 app = FastAPI()
 
-# 라우터 등록
 app.include_router(auth.router, prefix="/api/auth")
-app.include_router(career.router, prefix="/api/career")
-app.include_router(student_router)
-# app.include_router(interview.router, prefix="/api/interview")
+app.include_router(student.router, prefix="/api/student")
 
-# 정적 파일 (favicon.ico) 서빙 설정
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+origins = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"], # 필요에 따라 수정
+    allow_headers=["Content-Type", "Authorization"], # 필요에 따라 수정
+)
 
 @app.get("/")
 async def root():
     return {"message": "안녕하세요.."}
-
-# URL: http://127.0.0.1:8000/
-#
