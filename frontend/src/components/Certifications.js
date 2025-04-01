@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Layout, Input, Button, List, DatePicker } from 'antd';
 import SideBar from './SideBar';
 import '../styles/Certifications.styles.css';
-import moment from 'moment';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 
@@ -17,6 +17,7 @@ function Certifications() {
       setCertifications([
         ...certifications,
         {
+          id: Date.now(), // Add a unique ID for each certification
           name: certificationName,
           date: certificationDate.format('YYYY-MM-DD'),
         },
@@ -24,6 +25,10 @@ function Certifications() {
       setCertificationName('');
       setCertificationDate(null);
     }
+  };
+
+  const handleDeleteCertification = (id) => {
+    setCertifications(certifications.filter((certification) => certification.id !== id));
   };
 
   return (
@@ -54,7 +59,14 @@ function Certifications() {
               bordered
               dataSource={certifications}
               renderItem={(item) => (
-                <List.Item className="certification-item">
+                <List.Item className="certification-item" actions={[
+                  <Button
+                    icon={<DeleteOutlined />}
+                    onClick={() => handleDeleteCertification(item.id)}
+                    size="small"
+                  />,
+                ]}
+                >
                   <span className="certification-name">{item.name}</span>
                   <span className="certification-date">{item.date}</span>
                 </List.Item>

@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import * as styles from '../styles/LoginPage.styles';
+import { AuthContext } from '../contexts/AuthContext'; // AuthContext import
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Context에서 login 함수 가져오기
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -20,7 +22,8 @@ const LoginPage = () => {
 
     // 임시 성공 처리 (실제로는 API 응답에 따라 처리)
     message.success('로그인 성공!');
-    navigate('/dashboard'); // 로그인 성공 시 대시보드로 이동
+    login(); // 로그인 성공 시 Context의 login 함수 호출
+    navigate('/'); // 로그인 성공 시 메인 페이지('/')로 이동
   };
 
   return (
