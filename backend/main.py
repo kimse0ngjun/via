@@ -33,5 +33,4 @@ app.add_middleware(
 async def root():
     return {"message": "안녕하세요.."}
 
-# URL: http://127.0.0.1:8000/
-#
+# URI: http://127.0.0.1:8000/

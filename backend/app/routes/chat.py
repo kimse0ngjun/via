@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from openai import OpenAI
-from database import db
+from app.database import db
 from app.models.chat import ChatCreate
 from app.core.config import settings
 import uuid
@@ -9,7 +9,7 @@ from datetime import datetime
 router = APIRouter()
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
-@router.post("/chat")
+@router.post("/")
 async def chat_with_gpt(chat_data: ChatCreate):
     email = chat_data.email.lower().strip()
 
@@ -49,7 +49,7 @@ async def chat_with_gpt(chat_data: ChatCreate):
     - 이름: {user['name']}  
     - 나이: {user['age']}  
     - 성별: {student['gender']}  
-    - 학년: {student['grade']}  
+    - 학점: {student['grade']}  
     - 전공: {student['major']}  
     - 관심 분야: {student['interest']}  
     - 보유 자격증: {', '.join(student['certifications']) if student['certifications'] else '없음'}  
@@ -78,9 +78,18 @@ async def chat_with_gpt(chat_data: ChatCreate):
     - **스스로 어떤 방향으로 준비해야 할지 확신**을 가질 수 있도록 안내합니다.  
 
     **상황 설명2**
-    당신은 현재 고등학교를 다니고 있는 고등학교 3학년 19살이다.
-    인문계 고등학교를 진학하며 공부를 해보고 있으나, 아직 확실한 진로가
-    없다보니 공부에 대한 흥미도 떨어지고 성적도 떨어지고 있다.
+    당신은 현재 고등학교를 다니고 있는 고등학생입니다.
+    고등학교를 진학하며 공부를 해보고 있으나, 아직 확실한 진로가
+    없다보니 공부에 대한 흥미도 떨어지고 성적도 떨어지고 있습니다.
+
+    진로 탐색 활동을 하며 외부활동도 해보고, 외부 초청강사 강의도 가보았습니다.
+    나 자신에 대하여 고민한 결과, IT 분야의 디자인 쪽에 흥미가 있다는 것 알게되었습니다.
+    그렇지만 IT 분야는 매우 넓기 때문에, 어떤 직업이 있는지도 잘 모르고 IT 분야의 정보를
+    알고 싶었습니다.
+
+    그렇게 시간을 보내다가 우연히 인터넷 검색하다가 **VIA**라는 웹 사이트를 발견하고,
+    IT 분야의 직업이 어떤 것이 있는지, **UX/UI** 디자인 진로
+    
     
     
     ## 주의사항
@@ -91,23 +100,24 @@ async def chat_with_gpt(chat_data: ChatCreate):
 
 
     try:
+        print(prompt)
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}]
         )
 
-        gpt_reply = response.choices[0].message.content
+        gpt_reply = response.choices[0].message.content.replace("\n", " ")
 
         chat_entry = {
             "_id": str(uuid.uuid4()),
             "con_id": chat_data.con_id,
-            "user_email": email,
+            "email": email,
             "user_message": chat_data.user_message,
             "gpt_reply": gpt_reply,
             "created_at": chat_data.created_at if chat_data.created_at else datetime.utcnow()
         }
 
-        await db.chats.insert_one(chat_entry)
+        await db.chat_collection.insert_one(chat_entry)
 
         return {"reply": gpt_reply}
 
