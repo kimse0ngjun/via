@@ -1,19 +1,18 @@
-// src/contexts/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // 초기값을 null로 설정
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isLoggedIn');
-    if (loggedIn === 'true') {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedIn);
   }, []);
+
+  useEffect(() => {
+    console.log("🔄 로그인 상태 변경:", isLoggedIn);
+  }, [isLoggedIn]);
 
   const login = () => {
     localStorage.setItem('isLoggedIn', 'true');

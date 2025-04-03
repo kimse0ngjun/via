@@ -1,75 +1,39 @@
-// src/components/LoginPage.styles.js
-import { css } from '@emotion/react';
+import { styled } from '@mui/material/styles';
+import { Box, Typography, Button } from '@mui/material';
 
-export const container = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
+export const Container = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+});
 
+export const Title = styled(Typography)({
+  fontWeight: 'bold',
+  fontStyle: 'italic',
+  marginBottom: '24px',
+});
 
-export const title = css`
-  font-size: 24px;
-  font-weight: bold;
-  font-style: italic;
-  margin-bottom: 30px;
-`;
+export const FormBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+  width: '300px',
+});
 
-export const form = css`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-
-export const row = css`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const label = css`
-  font-weight: bold;
-  width: 60px;
-`;
-
-export const input = css`
-  width: 250px;
-  border: none;
-  border-bottom: 1px solid #a06baf;
-  border-radius: 0;
-  padding: 5px;
-  font-size: 16px;
-
-  &:focus {
-    outline: none;
-    box-shadow: none;
-    border-bottom: 2px solid #a06baf;
-  }
-`;
-
-export const findButton = css`
-  margin-top: 20px;
-  width: 100%;
-  background-color: #8809FF33;
-  color: black;
-  border: none;
-  border-radius: 20px;
-  border: 1px solid black;
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-
-  &:hover {
-    background-color: #8809FF80;
-    color:white;
-  }
-`;
+export const FindButton = styled(Button)({
+  marginTop: '16px',
+  backgroundColor: '#000000', // 검정색 버튼
+  color: 'white',
+  borderRadius: '8px',
+  fontWeight: 'bold',
+  padding: '10px',
+  '&:hover': {
+    backgroundColor: '#333333', // hover 시 약간 밝은 검정색
+  },
+});

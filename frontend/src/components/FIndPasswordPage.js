@@ -1,26 +1,19 @@
-/** @jsxImportSource @emotion/react */
 import React from 'react';
-import { Input, Button } from 'antd';
-import * as styles from '../styles/FindPasswordPage.styles';
+import { TextField } from '@mui/material';
+import { Container, Title, FormBox, FindButton } from '../styles/FindPasswordPage.styles';
 
 const FindPasswordPage = () => {
   return (
-    <div css={styles.container}>
-      <h2 css={styles.title}>FindPassword</h2>
-      <div css={styles.form}>
-        <div css={styles.row}>
-          <label css={styles.label}>이름</label>
-          <Input placeholder="이름을 입력하세요." css={styles.input} />
-        </div>
-        <div css={styles.row}>
-          <label css={styles.label}>이메일</label>
-          <Input placeholder="이메일을 입력하세요." css={styles.input} />
-        </div>
-        <Button css={styles.findButton}>비밀번호 찾기</Button>
-        {/* 비밀번호 찾기 링크 추가 */}
-        
-      </div>
-    </div>
+    <Container>
+      <Title variant="h4">Find Password</Title>
+      <FormBox>
+        <TextField label="이름" variant="standard" fullWidth />
+        <TextField label="이메일" variant="standard" fullWidth />
+        <FindButton variant="contained" fullWidth>
+          비밀번호 찾기
+        </FindButton>
+      </FormBox>
+    </Container>
   );
 };
 

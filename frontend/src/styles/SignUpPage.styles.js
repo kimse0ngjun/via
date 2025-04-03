@@ -1,7 +1,7 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { styled } from '@mui/material/styles';
+import { Button, Box, Typography } from '@mui/material';
 
-export const container = css`
+export const Container = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,67 +9,30 @@ export const container = css`
   height: 100vh;
 `;
 
-export const title = css`
-  font-size: 24px;
-  font-weight: bold;
-  font-style: italic;
-  margin-bottom: 30px;
-`;
-
-export const form = css`
+export const Form = styled('form')`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   width: 300px;
 `;
 
-export const row = css`
+export const Row = styled(Box)`
   display: flex;
   flex-direction: column;
 `;
 
-export const label = css`
-  font-weight: bold;
-  margin-bottom: 5px;
-`;
-
-export const input = css`
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #a06baf;
-  padding: 8px;
-  font-size: 16px;
-
-  &:focus {
-    outline: none;
-    border-bottom: 2px solid #a06baf;
-  }
-`;
-
-export const warningText = css`
+export const WarningText = styled(Typography)`
   font-size: 12px;
-  color: #ff3d3d;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  color: red;
+  text-align: left;
 `;
 
-export const signUpButton = css`
+export const SignUpButton = styled(Button)`
   margin-top: 20px;
   width: 100%;
-  background-color: #8809FF33;
-  color: black;
-  border: none;
-  border-radius: 20px;
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  border:1px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-
+  background-color: black;
+  color: white;
   &:hover {
-    background-color: #8809FF80;
+    background-color: #333;
   }
 `;
