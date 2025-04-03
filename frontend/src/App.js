@@ -13,6 +13,7 @@ import Certifications from "./components/Certifications";
 import 'antd/dist/antd.css';  // 기본 스타일
 import { AuthProvider } from './contexts/AuthContext'; // AuthProvider import
 import { Chatbot } from './components/Chatbot'
+import InterestsPage from './components/InterestsPage';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/certifications" element={<Certifications />} />
+          <Route path="/interests" element={<InterestsPage />} />
           <Route path="/chat" element={<Chatbot />} />
         </Routes>
       </Router>
