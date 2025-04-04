@@ -1,6 +1,6 @@
 # consult.py
 from fastapi import APIRouter
-from database import consultations_collection
+from app.database import consultations_collection
 from app.models.student import Consultation
 
 router = APIRouter()

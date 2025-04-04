@@ -17,6 +17,7 @@ users_collection = db["users"]
 students_collection = db["students"]
 chats_collection= db["chats"]
 interests_collection = db["interests"]
+conversations_collection = db["conversations"]
 consultations_collection = db["consultations"]
 
 # 이메일로 사용자 조회
