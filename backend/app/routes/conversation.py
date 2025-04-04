@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException
-from database import db
-from models.chat import ConversationCreate
+from app.database import db
+from app.models.chat import ConversationCreate
 
 router = APIRouter()
 
-@router.post("/conversation")
+# 대화 생성 API
+@router.post("/")
 async def create_conversation(conversation: ConversationCreate):
     conv_data = conversation.dict()
     conv_data["_id"] = f"conv_{conversation.user_id}_{int(conversation.created_at.timestamp())}"
@@ -12,7 +13,8 @@ async def create_conversation(conversation: ConversationCreate):
     await db.conversations.insert_one(conv_data)
     return {"message": "대화가 생성되었습니다.", "con_id": conv_data["_id"]}
 
-@router.delete("/conversation/{con_id}")
+# 대화 삭제 API
+@router.delete("/{con_id}")
 async def delete_conversation(con_id: str):
     result = await db.conversations.update_one({"_id": con_id}, {"$set": {"is_deleted": True}})
     
