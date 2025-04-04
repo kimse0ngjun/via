@@ -1,68 +1,72 @@
-/** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
-import { Input } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import * as styles from '../styles/LoginPage.styles';
+import React, { useState, useContext } from 'react';
+import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
+import { Button } from '@mui/material';
+import {
+  Container,
+  Title,
+  Form,
+  StyledTextField,
+  PasswordReset,
+  PasswordLink,
+} from '../styles/LoginPage.styles';
 
-const LoginPage = ({ onLoginSuccess }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/auth/login', {
-        email,
-        password,
-      });
-
-      localStorage.setItem('access_token', response.data.access_token);
-      onLoginSuccess(); // 부모 컴포넌트에서 상태 업데이트
-      navigate('/'); // 메인 페이지로 이동
-    } catch (error) {
-      if (error.response) {
-        setErrorMessage(error.response.data.detail || '로그인 실패');
-      } else {
-        setErrorMessage('서버와의 연결에 실패했습니다.');
-      }
+  const handleLogin = () => {
+    if (!email || !password) {
+      message.error('아이디와 비밀번호를 모두 입력해주세요.');
+      return;
     }
+
+    console.log('로그인 시도:', { email, password });
+    message.success('로그인 성공!');
+    login();
+    navigate('/');
   };
 
   return (
-    <div css={styles.container}>
-      <h2 css={styles.title}>LOGIN</h2>
-      <div css={styles.form}>
-        <div css={styles.row}>
-          <label css={styles.label}>아이디</label>
-          <Input
-            placeholder="이메일을 입력하세요."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            css={styles.input}
-          />
-        </div>
-        <div css={styles.row}>
-          <label css={styles.label}>비밀번호</label>
-          <Input.Password
-            placeholder="비밀번호를 입력하세요."
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            css={styles.input}
-          />
-        </div>
-        {errorMessage && <div css={styles.errorMessage}>{errorMessage}</div>}
-        <div css={styles.passwordReset}>
-          <Link to="/find-password" css={styles.passwordLink}>
-            비밀번호 찾기
-          </Link>
-        </div>
-        <button css={styles.loginButton} onClick={handleLogin}>
+    <Container>
+      <Title>LOGIN</Title>
+      <Form>
+        <StyledTextField
+          label="아이디"
+          variant="standard"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <StyledTextField
+          label="비밀번호"
+          type="password"
+          variant="standard"
+          fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <PasswordReset>
+          <PasswordLink href="/find-password">비밀번호 찾기</PasswordLink>
+        </PasswordReset>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            backgroundColor: 'black',
+            color: 'white',
+            mt: 2,
+            '&:hover': { backgroundColor: '#333' },
+          }}
+          onClick={handleLogin}
+        >
           로그인
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

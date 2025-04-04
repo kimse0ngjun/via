@@ -15,7 +15,7 @@ from bson import ObjectId  # 여기서 bson에서 ObjectId를 임포트
 
 
 from bson import datetime as bson_datetime
-from bson import SON  # pymongo에서 SON을 사용하려면 bson에서 가져와야 합니다.
+from bson.son import SON  # pymongo에서 SON을 사용하려면 bson에서 가져와야 합니다.
 
 from datetime import datetime
 from app.models.auth import PasswordResetRequest, PasswordResetConfirm
