@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
 import LoginPage from "./components/LoginPage";
@@ -10,17 +10,24 @@ import SignupSuccessPage from './components/SignupSuccessPage';
 import MyProfile from "./components/MyProfile";
 import EditProfile from "./components/EditProfile";
 import Certifications from "./components/Certifications";
-import 'antd/dist/antd.css';  // 기본 스타일
-
-
+import 'antd/dist/antd.css'; // 기본 스타일
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
-    <Router> {/* Router는 여기서만 사용 */}
-      <AppHeader />
+    <Router>
+      <AppHeader onLoginSuccess={handleLoginSuccess} /> {/* 수정된 부분 */}
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
+        />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signupsuccess" element={<SignupSuccessPage />} />
         <Route path="/find-password" element={<FindPasswordPage />} />

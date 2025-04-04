@@ -14,7 +14,6 @@ app.include_router(student.router, prefix="/Student")
 app.include_router(mypage.router, prefix="/Mypage")
 # app.include_router(interview.router, prefix="/api/inteview")
 
-# 정적 파일 (favicon.ico) 서빙 설정
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # CORS 허용 설정

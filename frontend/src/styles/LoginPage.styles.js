@@ -1,4 +1,3 @@
-// src/components/LoginPage.styles.js
 import { css } from '@emotion/react';
 
 export const container = css`
@@ -12,7 +11,6 @@ export const container = css`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-
 
 export const title = css`
   font-size: 24px;
@@ -76,7 +74,6 @@ export const loginButton = css`
 export const passwordReset = css`
   margin-top: 10px;
   text-align: center;
-  
 `;
 
 export const passwordLink = css`
@@ -85,4 +82,12 @@ export const passwordLink = css`
   &:hover{
     color : #8809FF80;
   }
-  `;
+`;
+
+// 오류 메시지 스타일 추가
+export const errorMessage = css`
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+`;
