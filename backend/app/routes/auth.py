@@ -92,6 +92,7 @@ logger = logging.getLogger(__name__)
 
 @router.post("/password-reset-request")
 async def password_reset_request(request: PasswordResetRequest, background_tasks: BackgroundTasks):
+    name = request.name,
     email = request.email
     
     # 이메일로 사용자 찾기

@@ -4,7 +4,8 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     OPENAI_API_KEY: str
     MONGO_URI: str 
-    SECRET_KEY: str 
+    SECRET_KEY: str
+    CAREER_KEY: str 
 
     GOOGLE_CLIENT_ID: str
     GOOGLE_CLIENT_SECRET: str

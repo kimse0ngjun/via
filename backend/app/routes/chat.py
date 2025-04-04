@@ -5,11 +5,28 @@ from app.models.chat import ChatCreate
 from app.core.config import settings
 import uuid
 from datetime import datetime
+import httpx
 
 router = APIRouter()
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
-messages = []
+async def is_job_related(message: str) -> bool:
+    job_keywords = ["직업", "진로", "취업", "연봉", "직무", "하는 일", "커리어", "진학", "전망", "자격증"]
+    if any(kw in message.lower() for kw in job_keywords):
+        return True
+
+    judge_prompt = f"""
+    사용자의 질문이 직업, 진로, 커리어, 연봉, 자격증 등과 관련된 내용인지 판단해줘.
+    관련 있으면 '예', 관련 없으면 '아니오'로만 답해줘.
+
+    질문: "{message}"
+    """
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": judge_prompt}]
+    )
+    answer = response.choices[0].message.content.strip()
+    return "예" in answer
 
 @router.post("/")
 async def chat_with_gpt(chat_data: ChatCreate):
@@ -49,31 +66,65 @@ async def chat_with_gpt(chat_data: ChatCreate):
     - 친절하고 전문적인 어조 사용 
     - 답변은 너무 길지 않게 2~3줄로 표현 
     - 반복적인 표현 최소화 
-    - 사용자가 게속 질문할 수 있도록 스무고개 방식으로 답변
+    - 사용자가 계속 질문할 수 있도록 스무고개 방식으로 답변
     """
 
     try:
-        print(prompt)
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}]
         )
+        gpt_reply = response.choices[0].message.content.strip()
 
-        gpt_reply = response.choices[0].message.content.replace("\n", " ")
+        job_related = await is_job_related(chat_data.user_message)
+
+        job_name = None
+        job_info = None
+        career_text = ""
+
+        if job_related:
+            job_extract_prompt = f"다음 문장에서 핵심 직업명을 한 단어 또는 문장으로만 추출해줘:\n\n{chat_data.user_message}"
+            job_response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[{"role": "user", "content": job_extract_prompt}]
+            )
+            job_name = job_response.choices[0].message.content.strip()
+
+            try:
+                url = "https://www.career.go.kr/cnet/front/openapi/jobs.json"
+                params = {"apiKey": settings.CAREER_KEY, "searchJobNm": job_name}
+                async with httpx.AsyncClient() as http_client:
+                    res = await http_client.get(url, params=params)
+                    job_data = res.json()
+                    job_info = job_data.get("jobs", [])[0] if job_data.get("jobs") else None
+            except Exception as e:
+                print("CareerNet API 오류:", e)
+
+            if job_info:
+                career_text = f"""
+## 직업 정보:
+- 직업명: {job_info.get("job_nm", "N/A")}
+- 하는 일: {job_info.get("work", "정보 없음")}
+- 관련직업: {job_info.get("rel_job_nm", "없음")}
+- 연봉 수준: {job_info.get("wage", "정보 없음")}
+- 직업군: {job_info.get("aptit_name", "정보 없음")}
+"""
+
+        final_reply = f"{gpt_reply}\n\n{career_text}" if career_text.strip() else gpt_reply
 
         chat_entry = {
             "_id": str(uuid.uuid4()),
             "con_id": chat_data.con_id,
             "email": email,
             "user_message": chat_data.user_message,
-            "gpt_reply": gpt_reply,
+            "gpt_reply": final_reply,
+            "job_name": job_name,
             "created_at": chat_data.created_at if chat_data.created_at else datetime.utcnow()
         }
 
         await db.chats.insert_one(chat_entry)
 
-        return {"reply": gpt_reply}
+        return {"reply": final_reply}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
