@@ -4,7 +4,6 @@ import {
   UserOutlined,
   IdcardOutlined,
   LockOutlined,
-  LogoutOutlined,
   BellOutlined,
   SettingOutlined,
   MenuOutlined,
@@ -41,8 +40,6 @@ const SideBar = () => {
       return ['4'];
     } else if (path.startsWith('/account-settings')) {
       return ['5'];
-    } else if (path.startsWith('/logout')) {
-      return ['6'];
     }
     return [];
   };
@@ -79,9 +76,6 @@ const SideBar = () => {
         </Menu.Item>
         <Menu.Item key="5" icon={<SettingOutlined />}>
           <Link to="/account-settings">계정 설정</Link>
-        </Menu.Item>
-        <Menu.Item key="6" icon={<LogoutOutlined />}>
-          <Link to="/logout">로그아웃</Link>
         </Menu.Item>
       </Menu>
     </Sider>

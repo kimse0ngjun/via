@@ -15,6 +15,8 @@ import { AuthProvider } from './contexts/AuthContext'; // AuthProvider import
 import { Chatbot } from './components/Chatbot'
 import InterestsPage from './components/InterestsPage';
 import History from './components/History'
+import ResetPasswordPage from './components/ResetPasswordPage';
+
 
 const App = () => {
   return (
@@ -31,6 +33,7 @@ const App = () => {
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/certifications" element={<Certifications />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/interests" element={<InterestsPage />} />
           <Route path="/chat" element={<Chatbot />} />
           <Route path="/history" element={<History />} />

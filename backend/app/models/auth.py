@@ -13,6 +13,7 @@ class LoginRequest(BaseModel):
     password: str
 
 class PasswordResetRequest(BaseModel):
+    name: str
     email: EmailStr
 
 class PasswordResetConfirm(BaseModel):
