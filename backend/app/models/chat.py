@@ -1,16 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime, timezone
-from uuid import uuid4
+from typing import Optional
+import uuid
 
 class ChatCreate(BaseModel):
-    con_id: str = str(uuid4())
+    con_id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()))
     email: str
     user_message: str
     created_at: datetime = datetime.now(timezone.utc)
-
-# 대화 모델
-class ConversationCreate(BaseModel):
-    user_id: str
-    # topic: str
-    created_at: datetime = datetime.now(timezone.utc)
-    is_deleted: bool = False

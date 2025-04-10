@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.database import db
-from app.models.chat import ConversationCreate
+from app.models.conversation import ConversationCreate
 
 router = APIRouter()
 

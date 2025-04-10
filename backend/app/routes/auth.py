@@ -80,6 +80,7 @@ async def get_login_status(token: str = Depends(oauth2_scheme)):
 # 비밀번호 재설정 요청
 @router.post("/password-reset-request")
 async def password_reset_request(request: PasswordResetRequest, background_tasks: BackgroundTasks):
+    name = request.name,
     email = request.email
     user = await get_user_by_email(email)
     if not user:

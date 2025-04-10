@@ -1,18 +1,19 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import auth, student, chatgpt, mypage, chat, conversation  # interview
+from app.routes import auth, student, chatgpt, mypage, chat, conversation, career # interview
 
 app = FastAPI()
 
-# 라우터 등록 (소문자로 변경)
-app.include_router(auth.router, prefix="/api/auth")
+# 라우터 등록
+app.include_router(auth.router, prefix="/auth")
 app.include_router(chat.router, prefix="/chat")
 app.include_router(conversation.router, prefix="/conversation")
 app.include_router(chatgpt.router, prefix="/chatgpt")
 app.include_router(student.router, prefix="/student")
 app.include_router(mypage.router, prefix="/mypage")
-# app.include_router(interview.router, prefix="/api/interview")
+app.include_router(career.router, prefix="/career")
+# app.include_router(interview.router, prefix="/api/inteview")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
