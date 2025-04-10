@@ -63,7 +63,15 @@ export const AppHeader = () => {
   );
 
   return (
-    <AppBar position="static" color="inherit" elevation={1} sx={{ backgroundColor: 'white' }}>
+    <AppBar 
+      position="fixed" 
+      color="inherit" 
+      elevation={1} 
+      sx={{ 
+        backgroundColor: 'white',
+        zIndex: (theme) => theme.zIndex.drawer + 1
+      }}
+    >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography
           variant="h6"

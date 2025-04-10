@@ -68,15 +68,6 @@ const SideBar = () => {
         <Menu.Item key="2" icon={<IdcardOutlined />}>
           <Link to="/certifications">자격증 관리</Link>
         </Menu.Item>
-        <Menu.Item key="3" icon={<LockOutlined />}>
-          <Link to="/change-password">비밀번호 변경</Link>
-        </Menu.Item>
-        <Menu.Item key="4" icon={<BellOutlined />}>
-          <Link to="/notifications">알림 설정</Link>
-        </Menu.Item>
-        <Menu.Item key="5" icon={<SettingOutlined />}>
-          <Link to="/account-settings">계정 설정</Link>
-        </Menu.Item>
       </Menu>
     </Sider>
   );
