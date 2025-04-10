@@ -6,13 +6,13 @@ from app.routes import auth, student, chatgpt, mypage, chat, conversation, caree
 app = FastAPI()
 
 # 라우터 등록
-app.include_router(auth.router, prefix="/Auth")
-app.include_router(chat.router, prefix="/Chat")
-app.include_router(conversation.router, prefix="/Conversation")
-app.include_router(chatgpt.router, prefix="/Chatgpt")
-app.include_router(student.router, prefix="/Student")
-app.include_router(mypage.router, prefix="/Mypage")
-app.include_router(career.router, prefix="/Career")
+app.include_router(auth.router, prefix="/auth")
+app.include_router(chat.router, prefix="/chat")
+app.include_router(conversation.router, prefix="/conversation")
+app.include_router(chatgpt.router, prefix="/chatgpt")
+app.include_router(student.router, prefix="/student")
+app.include_router(mypage.router, prefix="/mypage")
+app.include_router(career.router, prefix="/career")
 # app.include_router(interview.router, prefix="/api/inteview")
 
 # 정적 파일 (favicon.ico) 서빙 설정

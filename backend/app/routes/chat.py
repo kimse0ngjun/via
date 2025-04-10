@@ -6,6 +6,7 @@ from app.core.config import settings
 import uuid
 from datetime import datetime
 import httpx
+import re
 
 router = APIRouter()
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
@@ -27,6 +28,14 @@ async def is_job_related(message: str) -> bool:
     )
     answer = response.choices[0].message.content.strip()
     return "예" in answer
+
+def preprocess_text(text: str) -> str:
+    text = text.replace("\n\n", " ")
+    text = text.replace("\n", " ")
+    text = text.replace("##", "")
+    text = text.strip()
+    text = re.sub(r"-", "", text)
+    return text
 
 @router.post("/")
 async def chat_with_gpt(chat_data: ChatCreate):
@@ -102,13 +111,17 @@ async def chat_with_gpt(chat_data: ChatCreate):
 
             if job_info:
                 career_text = f"""
-## 직업 정보:
-- 직업명: {job_info.get("job_nm", "N/A")}
-- 하는 일: {job_info.get("work", "정보 없음")}
-- 관련직업: {job_info.get("rel_job_nm", "없음")}
-- 연봉 수준: {job_info.get("wage", "정보 없음")}
-- 직업군: {job_info.get("aptit_name", "정보 없음")}
-"""
+    직업 정보:
+    - 직업명: {job_info.get("job_nm", "N/A")}
+    - 하는 일: {job_info.get("work", "정보 없음")}
+    - 관련직업: {job_info.get("rel_job_nm", "없음")}
+    - 연봉 수준: {job_info.get("wage", "정보 없음")}
+    - 직업군: {job_info.get("aptit_name", "정보 없음")}
+    """
+
+        # Preprocess the text
+        gpt_reply = preprocess_text(gpt_reply)
+        career_text = preprocess_text(career_text)
 
         final_reply = f"{gpt_reply}\n\n{career_text}" if career_text.strip() else gpt_reply
 
@@ -123,6 +136,19 @@ async def chat_with_gpt(chat_data: ChatCreate):
         }
 
         await db.chats.insert_one(chat_entry)
+
+        await db.conversations.update_one(
+            {"_id": chat_data.con_id},
+            {
+                "$push": {
+                    "messages": {
+                        "user_message": chat_data.user_message,
+                        "gpt_reply": final_reply
+                    }
+                }
+            },
+            upsert=True
+        )
 
         return {"reply": final_reply}
 
