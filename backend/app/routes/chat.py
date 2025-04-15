@@ -119,7 +119,6 @@ async def chat_with_gpt(chat_data: ChatCreate):
     - 직업군: {job_info.get("aptit_name", "정보 없음")}
     """
 
-        # Preprocess the text
         gpt_reply = preprocess_text(gpt_reply)
         career_text = preprocess_text(career_text)
 

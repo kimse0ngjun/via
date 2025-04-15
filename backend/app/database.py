@@ -19,6 +19,7 @@ chats_collection= db["chats"]
 interests_collection = db["interests"]
 conversations_collection = db["conversations"]
 consultations_collection = db["consultations"]
+recommends_collection = db["recommends"]
 
 # 이메일로 사용자 조회
 async def get_user_by_email(email: str):

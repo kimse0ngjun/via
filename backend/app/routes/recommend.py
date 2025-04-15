@@ -1,12 +1,17 @@
 from fastapi import APIRouter, HTTPException
-from app.services.chatgpt_service import get_combined_career_recommendation
+from pydantic import BaseModel
+from typing import List
+from app.services.chatgpt_service import get_careernet_recommendation
+from app.models.recommend import JobRecommendation
 
-router = APIRouter(prefix="/recommend", tags=["직업 추천"])
+router = APIRouter()
 
-# 메인 추천 API
-@router.get("/job-history")
-async def recommend_job_from_history(user_id: str):  # user_id로 통일
-    result = await get_combined_career_recommendation(user_id)
+class UserIDRequest(BaseModel):
+    user_id: str
+
+@router.post("/job-history", response_model=List[JobRecommendation])
+async def recommend_job_from_history(data: UserIDRequest):
+    result = await get_careernet_recommendation(data.user_id)
     if not result:
         raise HTTPException(status_code=404, detail="직업 추천 결과가 없습니다.")
     return result
