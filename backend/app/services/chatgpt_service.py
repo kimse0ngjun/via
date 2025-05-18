@@ -1,10 +1,10 @@
 # chatgpt_service.py
-from app.database import chat_collection
-from utils.careernet_api import get_job_info_by_keyword 
+from app.database import chats_collection
+from app.utils.career import get_job_info_by_keyword 
 
 async def get_careernet_recommendation(user_id: str):
-    recent_chats = await chat_collection.find({"user_id": user_id}).sort("timestamp", -1).limit(3).to_list(length=3)
-    
+    recent_chats = await chats_collection.find({"user_id": user_id}).sort("timestamp", -1).limit(3).to_list(length=3)
+        
     if not recent_chats:
         return "최근 대화 기록이 없습니다."
 
