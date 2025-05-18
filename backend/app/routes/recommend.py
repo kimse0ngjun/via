@@ -2,12 +2,9 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
 from app.services.chatgpt_service import get_careernet_recommendation
-from app.models.recommend import JobRecommendation
+from app.models.recommend import JobRecommendation, UserIDRequest
 
 router = APIRouter()
-
-class UserIDRequest(BaseModel):
-    user_id: str
 
 @router.post("/job-history", response_model=List[JobRecommendation])
 async def recommend_job_from_history(data: UserIDRequest):

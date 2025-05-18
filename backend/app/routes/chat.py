@@ -3,6 +3,7 @@ from openai import OpenAI
 from app.database import db
 from app.models.chat import ChatCreate
 from app.core.config import settings
+from bson import ObjectId
 import uuid
 from datetime import datetime
 import httpx
@@ -39,10 +40,10 @@ def preprocess_text(text: str) -> str:
 
 @router.post("/")
 async def chat_with_gpt(chat_data: ChatCreate):
-    email = chat_data.email.lower().strip()
+    user_id = chat_data.user_id.strip()
 
-    user = await db.users.find_one({"email": email})
-    student = await db.students.find_one({"email": email})
+    user = await db.users.find_one({"_id": ObjectId(user_id)})
+    student = await db.students.find_one({"_id": ObjectId(user_id)})
 
     if not user or not student:
         raise HTTPException(status_code=404, detail="사용자 정보를 찾을 수 없습니다.")
@@ -127,7 +128,7 @@ async def chat_with_gpt(chat_data: ChatCreate):
         chat_entry = {
             "_id": str(uuid.uuid4()),
             "con_id": chat_data.con_id,
-            "email": email,
+            "user_id": user_id,
             "user_message": chat_data.user_message,
             "gpt_reply": final_reply,
             "job_name": job_name,
