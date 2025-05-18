@@ -21,7 +21,7 @@ export const InterestsPage = () => {
   };
 
   return (
-    <Container maxWidth="md" className="interests-page">
+    <Container maxWidth="md" className="interests-page" style={{ paddingTop: '80px' }}>
       <Box sx={{ mt: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom className="question">
           나의 관심 기록

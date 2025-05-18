@@ -8,7 +8,7 @@ import {
   SettingOutlined,
   MenuOutlined,
 } from '@ant-design/icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/SideBar.css'; // CSS 파일 임포트
 
 const { Sider } = Layout;
@@ -19,6 +19,7 @@ const SideBar = () => {
     return storedCollapsed === 'false' ? false : true;
   });
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem('sidebarCollapsed', collapsed);
@@ -51,6 +52,7 @@ const SideBar = () => {
       collapsible
       collapsed={collapsed}
       trigger={null}
+      style={{ paddingTop: '60px' }}
     >
       <div className="sidebar-header">
         <Button className="hamburger-btn" type="text" onClick={toggleSidebar}>
@@ -63,7 +65,7 @@ const SideBar = () => {
         style={{ height: '100%', borderRight: 0 }}
       >
         <Menu.Item key="1" icon={<UserOutlined />}>
-          <Link to="/my-profile">회원 정보</Link>
+          <Link to="/my-profile">마이프로필</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<IdcardOutlined />}>
           <Link to="/certifications">자격증 관리</Link>

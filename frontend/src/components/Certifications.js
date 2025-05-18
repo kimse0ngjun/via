@@ -35,7 +35,7 @@ function Certifications() {
   return (
     <Layout className="certifications-layout">
       <SideBar />
-      <Layout className="certifications-content-layout">
+      <Layout className="certifications-content-layout" style={{ paddingTop: '80px' }}>
         <Content className="certifications-content">
           <div className="certifications-container">
             <Typography.Title level={2} className="certifications-title">

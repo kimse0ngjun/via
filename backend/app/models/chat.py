@@ -1,10 +1,17 @@
-from pydantic import BaseModel, Field
-from datetime import datetime, timezone
+from fastapi import APIRouter
+from pydantic import BaseModel
 from typing import Optional
-import uuid
+from datetime import datetime
+
+router = APIRouter()
 
 class ChatCreate(BaseModel):
-    con_id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()))
-    email: str
     user_message: str
-    created_at: datetime = datetime.now(timezone.utc)
+    con_id: str
+    email: str
+    created_at: Optional[datetime] = None
+
+@router.post("/")  # 여기서 "/"는 "/api/chat"으로 확장됨
+async def chat_endpoint(payload: ChatCreate):
+    reply = f"'{payload.user_message}'에 대한 답변입니다."
+    return {"reply": reply}

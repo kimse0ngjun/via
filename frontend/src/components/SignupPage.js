@@ -52,7 +52,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ paddingTop: '80px' }}>
       <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 3 }}>SIGNUP</Typography>
       <Form onSubmit={handleSignUp}>
         <Row>

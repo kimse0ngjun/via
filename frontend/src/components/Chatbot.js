@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Paper,
@@ -13,17 +13,55 @@ import SendIcon from '@mui/icons-material/Send';
 export const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [conId, setConId] = useState('');
 
-  const handleSend = () => {
+  // 최초 1회만 con_id 생성
+  useEffect(() => {
+    setConId(Date.now().toString());
+  }, []);
+
+  const handleSend = async () => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, isUser: true }]);
+      const userMessage = input.trim();
+      setMessages([...messages, { text: userMessage, isUser: true }]);
       setInput('');
-      // TODO: Add bot response logic here
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            user_message: userMessage,
+            con_id: conId, // conId 사용
+            email: 'test@example.com'
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data && data.reply) {
+          setMessages(prevMessages => [...prevMessages, { text: data.reply, isUser: false }]);
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+        setMessages(prevMessages => [...prevMessages, {
+          text: '⚠️ 서버 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
+          isUser: false
+        }]);
+      }
     }
   };
 
   return (
-    <Container maxWidth="md" sx={{ height: 'calc(100vh - 64px)', py: 2 }}>
+    <Container maxWidth="md" sx={{ height: 'calc(100vh - 64px)', py: 2, paddingTop: '80px' }}>
       <Paper
         elevation={3}
         sx={{
@@ -78,7 +116,7 @@ export const Chatbot = () => {
             placeholder="메시지를 입력하세요..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           />
           <IconButton color="primary" onClick={handleSend}>
             <SendIcon />
@@ -87,6 +125,6 @@ export const Chatbot = () => {
       </Paper>
     </Container>
   );
-}; 
+};
 
 export default Chatbot;

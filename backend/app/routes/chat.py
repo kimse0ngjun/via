@@ -1,5 +1,5 @@
+import openai
 from fastapi import APIRouter, HTTPException
-from openai import OpenAI
 from app.database import db
 from app.models.chat import ChatCreate
 from app.core.config import settings
@@ -7,9 +7,12 @@ import uuid
 from datetime import datetime
 import httpx
 import re
+from app.core.config import settings
 
 router = APIRouter()
-client = OpenAI(api_key=settings.OPENAI_API_KEY)
+
+# OpenAI 설정
+openai.api_key = settings.OPENAI_API_KEY
 
 async def is_job_related(message: str) -> bool:
     job_keywords = ["직업", "진로", "취업", "연봉", "직무", "하는 일", "커리어", "진학", "전망", "자격증"]
@@ -22,7 +25,7 @@ async def is_job_related(message: str) -> bool:
 
     질문: "{message}"
     """
-    response = client.chat.completions.create(
+    response = await openai.ChatCompletion.create(
         model="gpt-4o-mini",
         messages=[{"role": "user", "content": judge_prompt}]
     )
@@ -37,7 +40,7 @@ def preprocess_text(text: str) -> str:
     text = re.sub(r"-", "", text)
     return text
 
-@router.post("/")
+@router.post("/chat", response_model=dict)  # 경로 변경
 async def chat_with_gpt(chat_data: ChatCreate):
     email = chat_data.email.lower().strip()
 
@@ -49,7 +52,6 @@ async def chat_with_gpt(chat_data: ChatCreate):
 
     prompt = f"""
     ## 프롬프트 설명
-
     당신은 IT 백엔드 개발 전문가입니다. 사용자의 학력, 관심사, 보유 기술을 바탕으로 백엔드 개발 관련 질문에 대한 답변을 제공합니다.
 
     ## 사용자 정보 
@@ -79,7 +81,7 @@ async def chat_with_gpt(chat_data: ChatCreate):
     """
 
     try:
-        response = client.chat.completions.create(
+        response = await openai.ChatCompletion.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}]
         )
@@ -93,7 +95,7 @@ async def chat_with_gpt(chat_data: ChatCreate):
 
         if job_related:
             job_extract_prompt = f"다음 문장에서 핵심 직업명을 한 단어 또는 문장으로만 추출해줘:\n\n{chat_data.user_message}"
-            job_response = client.chat.completions.create(
+            job_response = await openai.ChatCompletion.create(
                 model="gpt-4o-mini",
                 messages=[{"role": "user", "content": job_extract_prompt}]
             )
@@ -104,22 +106,21 @@ async def chat_with_gpt(chat_data: ChatCreate):
                 params = {"apiKey": settings.CAREER_KEY, "searchJobNm": job_name}
                 async with httpx.AsyncClient() as http_client:
                     res = await http_client.get(url, params=params)
-                    job_data = res.json()
+                    job_data = await res.json()
                     job_info = job_data.get("jobs", [])[0] if job_data.get("jobs") else None
             except Exception as e:
                 print("CareerNet API 오류:", e)
 
             if job_info:
                 career_text = f"""
-    직업 정보:
-    - 직업명: {job_info.get("job_nm", "N/A")}
-    - 하는 일: {job_info.get("work", "정보 없음")}
-    - 관련직업: {job_info.get("rel_job_nm", "없음")}
-    - 연봉 수준: {job_info.get("wage", "정보 없음")}
-    - 직업군: {job_info.get("aptit_name", "정보 없음")}
-    """
+직업 정보:
+- 직업명: {job_info.get("job_nm", "N/A")}
+- 하는 일: {job_info.get("work", "정보 없음")}
+- 관련직업: {job_info.get("rel_job_nm", "없음")}
+- 연봉 수준: {job_info.get("wage", "정보 없음")}
+- 직업군: {job_info.get("aptit_name", "정보 없음")}
+"""
 
-        # Preprocess the text
         gpt_reply = preprocess_text(gpt_reply)
         career_text = preprocess_text(career_text)
 
@@ -153,4 +154,5 @@ async def chat_with_gpt(chat_data: ChatCreate):
         return {"reply": final_reply}
 
     except Exception as e:
+        print(f"Error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
