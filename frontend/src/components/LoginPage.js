@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { message } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
-import { Button } from '@mui/material';
+import React, { useState, useContext } from "react";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
+import { Button } from "@mui/material";
+import axios from "axios";
 import {
   Container,
   Title,
@@ -10,24 +11,39 @@ import {
   StyledTextField,
   PasswordReset,
   PasswordLink,
-} from '../styles/LoginPage.styles';
+} from "../styles/LoginPage.styles";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
-      message.error('아이디와 비밀번호를 모두 입력해주세요.');
+      message.error("아이디와 비밀번호를 모두 입력해주세요.");
       return;
     }
 
-    console.log('로그인 시도:', { email, password });
-    message.success('로그인 성공!');
-    login();
-    navigate('/');
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/auth/login", // ✅ 포트 8000으로 수정
+        { email, password }
+      );
+
+      const { access_token, user_id } = response.data;
+
+      // ✅ 로컬스토리지에 저장
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("userId", user_id); // ✅ Chatbot에서 사용할 userId
+
+      message.success("로그인 성공!");
+      login(); // context 사용 시 로그인 상태 갱신
+      navigate("/");
+    } catch (err) {
+      console.error("로그인 실패:", err.response?.data || err.message);
+      message.error("로그인 실패: 이메일 또는 비밀번호를 확인해주세요.");
+    }
   };
 
   return (
@@ -56,10 +72,10 @@ const LoginPage = () => {
           variant="contained"
           fullWidth
           sx={{
-            backgroundColor: 'black',
-            color: 'white',
+            backgroundColor: "black",
+            color: "white",
             mt: 2,
-            '&:hover': { backgroundColor: '#333' },
+            "&:hover": { backgroundColor: "#333" },
           }}
           onClick={handleLogin}
         >

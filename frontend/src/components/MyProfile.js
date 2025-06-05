@@ -1,90 +1,194 @@
-import React, { useState } from "react"; // useState 훅 추가
-import { Layout, Card, Avatar, Button, Typography, Row, Col, Space, Divider } from "antd";
+import React, { useState } from "react";
+import {
+  Layout,
+  Card,
+  Avatar,
+  Button,
+  Typography,
+  Row,
+  Col,
+  Space,
+  Divider,
+  Radio,
+  Input,
+} from "antd";
 import {
   UserOutlined,
   EditOutlined,
   MailOutlined,
   PhoneOutlined,
   HomeOutlined,
-  CalendarOutlined, // 예시 필드용 아이콘 추가
-  BriefcaseOutlined // 예시 필드용 아이콘 추가
+  CalendarOutlined,
+  ReadOutlined,
+  ToolOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
-import SideBar from "./SideBar"; // SideBar 컴포넌트가 필요합니다.
-import "../styles/MyProfile.css"; // CSS 파일이 필요합니다.
+import SideBar from "./SideBar";
+import "../styles/MyProfile.css";
+import { useUser } from "./UserContext";
 
 const { Content } = Layout;
-const { Title, Text, Paragraph } = Typography; // Paragraph 추가
+const { Title, Text, Paragraph } = Typography;
 
 const MyProfile = () => {
-  // 예시 프로필 데이터를 state로 관리 (추후 API 연동 용이)
   const [profileData, setProfileData] = useState({
-    name: "홍길동",
-    email: "hong@example.com",
-    phone: "+82 10-1234-5678",
-    address: "서울특별시 강남구 테헤란로 123",
-    birthdate: "1990-01-15", // 예시 필드
-    occupation: "소프트웨어 개발자", // 예시 필드
-    avatarUrl: null, // 프로필 이미지 URL (없으면 기본 아이콘)
-    bio: "안녕하세요! 사용자 경험을 개선하는 데 열정을 가진 개발자 홍길동입니다. 새로운 기술 학습과 적용을 즐깁니다." // 예시 자기소개
+    name: "박세원",
+    email: "swon7150@gmail.com",
+    phone: "010-1234-5678",
+    address: "부산광역시 연제구 연산동",
+    birthdate: "1999-08-17",
+    age: 25,
+    gender: "남성",
+    grade: "3.8",
+    major: "ICT공학",
+    interest: "백엔드 개발",
+    certifications: ["정보처리기사", "SQLD"],
+    avatarUrl: "/static/uploads/avatar.png",
+    bio: "안녕하세요! 백엔드 개발자로 성장하고 있는 박세원입니다. GPT를 활용한 스마트한 시스템 개발에 관심이 많습니다.",
   });
 
-  // 프로필 수정 버튼 클릭 핸들러 (기능 구현은 별도)
-  const handleEditProfile = () => {
-    console.log("프로필 수정 버튼 클릭됨");
-    // 여기에 프로필 수정 모달을 띄우거나 수정 페이지로 이동하는 로직 추가
+  const { setProfileData: setGlobalProfile } = useUser();
+  const [editing, setEditing] = useState(false);
+  const [editedData, setEditedData] = useState({ ...profileData });
+
+  const handleEditProfile = () => setEditing(true);
+  const handleSaveProfile = () => {
+    setProfileData(editedData);
+    setGlobalProfile(editedData); // 전역 상태 저장
+    setEditing(false);
+  };
+
+  const handleChange = (field, value) => {
+    setEditedData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
     <Layout className="my-profile-layout">
-      <SideBar /> {/* SideBar 컴포넌트는 동일한 위치 또는 경로에 있어야 합니다 */}
+      <SideBar />
       <Layout className="my-profile-content-layout">
         <Content className="my-profile-content">
           <div className="my-profile-container">
-            <Title level={2} style={{ marginBottom: '24px' }}>마이 프로필</Title> {/* 제목 스타일 조정 */}
-
-            <Card className="profile-card" bordered={false} style={{ borderRadius: '8px' }}> {/* 카드 스타일링 */}
-              <Row gutter={[32, 24]} align="top"> {/* gutter로 간격 조정, align="top" */}
-
-                {/* 아바타 섹션 */}
-                <Col xs={24} md={8} style={{ textAlign: 'center' }}> {/* 반응형 및 가운데 정렬 */}
+            <Title level={2}>마이 프로필</Title>
+            <Card className="profile-card" bordered={false}>
+              <Row gutter={[32, 24]}>
+                <Col xs={24} md={8} style={{ textAlign: "center" }}>
                   <Avatar
-                    size={{ xs: 100, sm: 120, md: 140, lg: 160 }} // 반응형 크기
+                    size={140}
                     icon={!profileData.avatarUrl && <UserOutlined />}
                     src={profileData.avatarUrl}
-                    className="profile-avatar-image" // CSS 클래스 추가 (선택적)
                   />
-                  <Title level={4} style={{ marginTop: '16px', marginBottom: '4px' }}>{profileData.name}</Title>
-                  <Text type="secondary">{profileData.occupation}</Text> {/* 직업 추가 */}
+                  <Title level={4} style={{ marginTop: 16 }}>
+                    {profileData.name}
+                  </Title>
+                  <Text type="secondary">{profileData.interest}</Text>
                 </Col>
 
-                {/* 프로필 상세 정보 섹션 */}
                 <Col xs={24} md={16}>
-                  <div className="profile-details-section">
-                    <Title level={4} style={{ marginBottom: '16px' }}>기본 정보</Title>
-                    <Space direction="vertical" size="middle" style={{ width: '100%' }}> {/* 수직 Space 사용 */}
-                      <Text><MailOutlined style={{ marginRight: 8 }} /> {profileData.email}</Text>
-                      <Text><PhoneOutlined style={{ marginRight: 8 }} /> {profileData.phone || "연락처 미입력"}</Text>
-                      <Text><HomeOutlined style={{ marginRight: 8 }} /> {profileData.address || "주소 미입력"}</Text>
-                      <Text><CalendarOutlined style={{ marginRight: 8 }} /> {profileData.birthdate ? `생년월일: ${profileData.birthdate}` : "생년월일 미입력"}</Text>
-                    </Space>
+                  <Title level={4}>기본 정보</Title>
+                  <Space direction="vertical" style={{ width: "100%" }}>
+                    <Text>
+                      <MailOutlined /> {profileData.email}
+                    </Text>
+                    <Text>
+                      <PhoneOutlined /> {profileData.phone}
+                    </Text>
+                    <Text>
+                      <HomeOutlined /> {profileData.address}
+                    </Text>
+                    <Text>
+                      <CalendarOutlined /> 생년월일: {profileData.birthdate} (
+                      {profileData.age}세)
+                    </Text>
+                    <Text>
+                      <ReadOutlined /> 전공: {profileData.major}
+                    </Text>
+                    <Text>
+                      <ToolOutlined /> 성별: {profileData.gender}
+                    </Text>
+                    <Text>
+                      <StarOutlined /> 학점: {profileData.grade}
+                    </Text>
+                  </Space>
 
-                    <Divider /> {/* 구분선 추가 */}
+                  <Divider />
 
-                    <Title level={4} style={{ marginTop: '20px', marginBottom: '10px' }}>자기소개</Title>
-                    <Paragraph className="profile-bio" ellipsis={{ rows: 3, expandable: true, symbol: '더보기' }}>
-                      {profileData.bio || "자기소개가 아직 작성되지 않았습니다."}
-                    </Paragraph>
+                  <Title level={4}>자기소개</Title>
+                  <Paragraph
+                    ellipsis={{ rows: 3, expandable: true, symbol: "더보기" }}
+                  >
+                    {profileData.bio}
+                  </Paragraph>
 
-                    <Button
-                      type="primary"
-                      icon={<EditOutlined />}
-                      className="edit-profile-btn"
-                      style={{ marginTop: '24px' }} // 버튼 위치 조정
-                      onClick={handleEditProfile}
-                    >
+                  <Title level={5}>보유 자격증</Title>
+                  <ul>
+                    {profileData.certifications.map((cert, idx) => (
+                      <li key={idx}>{cert}</li>
+                    ))}
+                  </ul>
+
+                  {!editing ? (
+                    <Button icon={<EditOutlined />} onClick={handleEditProfile}>
                       프로필 수정
                     </Button>
-                  </div>
+                  ) : (
+                    <>
+                      <Divider />
+                      <Title level={4}>정보 수정</Title>
+                      <Space direction="vertical" style={{ width: "100%" }}>
+                        <Text>성별:</Text>
+                        <Radio.Group
+                          value={editedData.gender}
+                          onChange={(e) =>
+                            handleChange("gender", e.target.value)
+                          }
+                        >
+                          <Radio value="남성">남성</Radio>
+                          <Radio value="여성">여성</Radio>
+                        </Radio.Group>
+
+                        <Text>학점:</Text>
+                        <Input
+                          value={editedData.grade}
+                          onChange={(e) =>
+                            handleChange("grade", e.target.value)
+                          }
+                        />
+
+                        <Text>전공:</Text>
+                        <Input
+                          value={editedData.major}
+                          onChange={(e) =>
+                            handleChange("major", e.target.value)
+                          }
+                        />
+
+                        <Text>관심 분야:</Text>
+                        <Input
+                          value={editedData.interest}
+                          onChange={(e) =>
+                            handleChange("interest", e.target.value)
+                          }
+                        />
+
+                        <Text>자격증 (쉼표로 구분):</Text>
+                        <Input
+                          value={editedData.certifications.join(", ")}
+                          onChange={(e) =>
+                            handleChange(
+                              "certifications",
+                              e.target.value
+                                .split(",")
+                                .map((item) => item.trim())
+                            )
+                          }
+                        />
+
+                        <Button type="primary" onClick={handleSaveProfile}>
+                          저장
+                        </Button>
+                      </Space>
+                    </>
+                  )}
                 </Col>
               </Row>
             </Card>

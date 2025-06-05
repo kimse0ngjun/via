@@ -1,37 +1,38 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import auth, student, mypage, chat, conversation, career, recommend # interview
+from app.routes import auth, student, mypage, chat, conversation, career, recommend  # interview
 
-app = FastAPI()
+app = FastAPI(strict_slashes=False)
 
-# 라우터 등록
-app.include_router(auth.router, prefix="/auth")
-app.include_router(chat.router, prefix="/chat")
-app.include_router(conversation.router, prefix="/conversation")
-# app.include_router(chatgpt.router, prefix="/chatgpt")
-app.include_router(student.router, prefix="/student")
-app.include_router(mypage.router, prefix="/mypage")
-app.include_router(career.router, prefix="/career")
-app.include_router(recommend.router, prefix="/recommend")
-# app.include_router(interview.router, prefix="/api/inteview")
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# CORS 허용 설정
-origins = [
-    "http://localhost:3000",  # React 프론트엔드에서 오는 요청을 허용
-]
-
+# ✅ CORS 미들웨어를 최상단에 설정
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # 어떤 도메인에서 요청을 허용할 것인지 설정
+    allow_origins=["http://localhost:3000"],  # React 앱 주소
     allow_credentials=True,
     allow_methods=["*"],  # 모든 HTTP 메서드 허용
     allow_headers=["*"],  # 모든 헤더 허용
 )
 
+# ✅ 라우터 등록
+app.include_router(auth.router, prefix="/auth")
+app.include_router(chat.router, prefix="/chat")
+app.include_router(conversation.router, prefix="/conversation")
+app.include_router(student.router, prefix="/student")
+app.include_router(mypage.router, prefix="/mypage")
+app.include_router(career.router, prefix="/career")
+app.include_router(recommend.router, prefix="/recommend")
+# app.include_router(interview.router, prefix="/interview")  # 주석 처리된 경우
+
+# ✅ 정적 파일 서빙
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# ✅ 기본 라우트
 @app.get("/")
 async def root():
     return {"message": "안녕하세요.."}
-
+# main.py 마지막에 추가
+from fastapi.routing import APIRoute
+for route in app.routes:
+    if isinstance(route, APIRoute):
+        print(f"✅ Route: {route.path} - {route.methods}")

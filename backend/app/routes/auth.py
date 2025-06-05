@@ -16,11 +16,9 @@ from app.utils.security import (
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
-
 KAKAO_CLIENT_ID = os.getenv("KAKAO_CLIENT_ID")
 KAKAO_CLIENT_SECRET = os.getenv("KAKAO_CLIENT_SECRET")
 KAKAO_REDIRECT_URI = os.getenv("KAKAO_REDIRECT_URI")
-
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
 NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
 NAVER_REDIRECT_URI = os.getenv("NAVER_REDIRECT_URI")
@@ -49,19 +47,24 @@ async def register_user(data: RegisterRequest):
     await users_collection.insert_one(new_user)
     return {"message": "회원가입이 완료되었습니다."}
 
-# 로그인 API
+# ✅ 로그인 API (user_id 포함)
 @router.post("/login")
 async def login_user(data: LoginRequest):
     user = await users_collection.find_one({"email": data.email})
     if not user or not verify_password(data.password, user["hashed_password"]):
         raise HTTPException(status_code=400, detail="잘못된 이메일 또는 비밀번호입니다.")
 
-    token = create_jwt_token({"sub": str(user["_id"]), "user_id": str(user["_id"])})
-    
+    user_id = str(user["_id"])
+    token = create_jwt_token({"sub": user_id, "user_id": user_id})
+
     return {
         "access_token": token,
         "token_type": "bearer",
-        "user": {"name": user["name"], "email": user["email"]}
+        "user_id": user_id,
+        "user": {
+            "name": user["name"],
+            "email": user["email"]
+        }
     }
 
 # 로그인 상태 확인
@@ -80,7 +83,6 @@ async def get_login_status(token: str = Depends(oauth2_scheme)):
 # 비밀번호 재설정 요청
 @router.post("/password-reset-request")
 async def password_reset_request(request: PasswordResetRequest, background_tasks: BackgroundTasks):
-    name = request.name,
     email = request.email
     user = await get_user_by_email(email)
     if not user:
@@ -119,7 +121,9 @@ async def reset_password(request: PasswordResetConfirm):
 # 소셜 로그인 - Google
 @router.get("/google")
 async def google_login():
-    return {"login_url": f"https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={GOOGLE_CLIENT_ID}&redirect_uri={GOOGLE_REDIRECT_URI}&scope=openid%20email%20profile"}
+    return {
+        "login_url": f"https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={GOOGLE_CLIENT_ID}&redirect_uri={GOOGLE_REDIRECT_URI}&scope=openid%20email%20profile"
+    }
 
 @router.get("/google/callback")
 async def google_callback(code: str):
@@ -131,14 +135,12 @@ async def google_callback(code: str):
     
     async with httpx.AsyncClient() as client:
         response = await client.post(token_url, data=payload)
-
     if response.status_code != 200:
         raise HTTPException(status_code=400, detail="구글 인증 실패")
 
     access_token = response.json().get("access_token")
     async with httpx.AsyncClient() as client:
         user_info = await client.get("https://www.googleapis.com/oauth2/v2/userinfo", headers={"Authorization": f"Bearer {access_token}"})
-
     user_info = user_info.json()
     user = await users_collection.find_one({"email": user_info["email"]}) or {
         "name": user_info["name"], "email": user_info["email"], "provider": "google"
@@ -152,23 +154,25 @@ async def google_callback(code: str):
 # 소셜 로그인 - Kakao
 @router.get("/kakao")
 async def kakao_login():
-    return {"login_url": f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={KAKAO_CLIENT_ID}&redirect_uri={KAKAO_REDIRECT_URI}"}
+    return {
+        "login_url": f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={KAKAO_CLIENT_ID}&redirect_uri={KAKAO_REDIRECT_URI}"
+    }
 
 @router.get("/kakao/callback")
 async def kakao_callback(code: str):
     token_url = "https://kauth.kakao.com/oauth/token"
-    payload = {"grant_type": "authorization_code", "client_id": KAKAO_CLIENT_ID, "client_secret": KAKAO_CLIENT_SECRET, "redirect_uri": KAKAO_REDIRECT_URI, "code": code}
-    
+    payload = {
+        "grant_type": "authorization_code", "client_id": KAKAO_CLIENT_ID,
+        "client_secret": KAKAO_CLIENT_SECRET, "redirect_uri": KAKAO_REDIRECT_URI, "code": code
+    }
     async with httpx.AsyncClient() as client:
         response = await client.post(token_url, data=payload)
-
     if response.status_code != 200:
         raise HTTPException(status_code=400, detail="카카오 인증 실패")
 
     access_token = response.json().get("access_token")
     async with httpx.AsyncClient() as client:
         user_info = await client.get("https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
-
     user_info = user_info.json()
     email = user_info["kakao_account"]["email"]
     user = await users_collection.find_one({"email": email}) or {

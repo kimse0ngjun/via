@@ -1,44 +1,47 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AppHeader from "./components/AppHeader";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import MainPage from "./components/MainPage";
 import MyPage from "./components/MyPage";
-import FindPasswordPage from './components/FIndPasswordPage';
-import SignupSuccessPage from './components/SignupSuccessPage';
+import FindPasswordPage from "./components/FindPasswordPage"; // 오타 수정: FInd → Find
+import SignupSuccessPage from "./components/SignupSuccessPage";
 import MyProfile from "./components/MyProfile";
 import EditProfile from "./components/EditProfile";
 import Certifications from "./components/Certifications";
-import 'antd/dist/antd.css';  // 기본 스타일
-import { AuthProvider } from './contexts/AuthContext'; // AuthProvider import
-import { Chatbot } from './components/Chatbot'
-import InterestsPage from './components/InterestsPage';
-import History from './components/History'
-import ResetPasswordPage from './components/ResetPasswordPage';
-
+import InterestsPage from "./components/InterestsPage";
+import History from "./components/History";
+import ResetPasswordPage from "./components/ResetPasswordPage";
+import Chatbot from "./components/Chatbot";
+import Layout from "./components/Layout";
+import { AuthProvider } from "./contexts/AuthContext";
+import { UserProvider } from "./components/UserContext"; // ✅ context 추가
+import "antd/dist/antd.css";
 
 const App = () => {
   return (
-    <AuthProvider> {/* AuthProvider로 감싸줍니다 */}
-      <Router> {/* Router는 여기서만 사용 */}
-        <AppHeader />
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/signupsuccess" element={<SignupSuccessPage />} />
-          <Route path="/find-password" element={<FindPasswordPage />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/my-profile" element={<MyProfile />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/certifications" element={<Certifications />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/interests" element={<InterestsPage />} />
-          <Route path="/chat" element={<Chatbot />} />
-          <Route path="/history" element={<History />} />
-        </Routes>
-      </Router>
+    <AuthProvider>
+      <UserProvider>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/signupsuccess" element={<SignupSuccessPage />} />
+              <Route path="/find-password" element={<FindPasswordPage />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/my-profile" element={<MyProfile />} />
+              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/certifications" element={<Certifications />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/interests" element={<InterestsPage />} />
+              <Route path="/chat" element={<Chatbot />} />
+              <Route path="/history" element={<History />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </UserProvider>
     </AuthProvider>
   );
 };
