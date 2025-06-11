@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import {
   Layout,
   Card,
@@ -12,7 +11,6 @@ import {
   Divider,
   Radio,
   Input,
-  message,
 } from "antd";
 import {
   UserOutlined,
@@ -33,50 +31,44 @@ const { Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
 
 const MyProfile = () => {
-  const { profileData: globalUser } = useUser(); // email 전역에서 가져옴
-  const email = globalUser?.email; // 반드시 존재한다고 가정
-
-  const [profileData, setProfileData] = useState(null);
+  const { user, setProfileData: setGlobalProfile } = useUser();
+  const [profileData, setProfileData] = useState({});
   const [editing, setEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!email) return;
-
-    axios
-      .get(`/mypage/${email}`)
-      .then((res) => {
-        setProfileData(res.data);
-        setEditedData(res.data);
-      })
-      .catch((err) => {
-        message.error("프로필 정보를 불러오지 못했습니다.");
-        console.error(err);
-      })
-      .finally(() => setLoading(false));
-  }, [email]);
+    if (user) {
+      setProfileData(user);
+      setEditedData(user);
+    }
+  }, [user]);
 
   const handleEditProfile = () => setEditing(true);
+
+  const handleSaveProfile = () => {
+    setProfileData(editedData);
+    setGlobalProfile(editedData); // 전역 상태 저장
+    setEditing(false);
+  };
 
   const handleChange = (field, value) => {
     setEditedData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSaveProfile = async () => {
-    try {
-      const res = await axios.put(`/api/mypage/${email}`, editedData);
-      setProfileData(res.data);
-      setEditing(false);
-      message.success("프로필이 성공적으로 저장되었습니다.");
-    } catch (error) {
-      message.error("프로필 저장에 실패했습니다.");
-      console.error(error);
-    }
-  };
-
-  if (loading) return <div style={{ padding: 24 }}>불러오는 중...</div>;
-  if (!profileData) return <div style={{ padding: 24 }}>프로필 없음</div>;
+  if (!profileData || !profileData.name) {
+    return (
+      <Layout className="my-profile-layout">
+        <SideBar />
+        <Layout className="my-profile-content-layout">
+          <Content className="my-profile-content">
+            <div className="my-profile-container">
+              <Title level={2}>로딩 중...</Title>
+            </div>
+          </Content>
+        </Layout>
+      </Layout>
+    );
+  }
 
   return (
     <Layout className="my-profile-layout">
@@ -88,26 +80,38 @@ const MyProfile = () => {
             <Card className="profile-card" bordered={false}>
               <Row gutter={[32, 24]}>
                 <Col xs={24} md={8} style={{ textAlign: "center" }}>
-                  <Avatar size={140} icon={<UserOutlined />} />
+                  <Avatar
+                    size={140}
+                    icon={!profileData.avatarUrl && <UserOutlined />}
+                    src={profileData.avatarUrl}
+                  />
                   <Title level={4} style={{ marginTop: 16 }}>
                     {profileData.name}
                   </Title>
+                  <Text type="secondary">{profileData.interest}</Text>
                 </Col>
 
                 <Col xs={24} md={16}>
                   <Title level={4}>기본 정보</Title>
                   <Space direction="vertical" style={{ width: "100%" }}>
                     <Text>
-                      <MailOutlined /> {email}
+                      <MailOutlined /> {profileData.email}
                     </Text>
                     <Text>
-                      <CalendarOutlined /> 나이: {profileData.age}세
+                      <PhoneOutlined /> {profileData.phone}
+                    </Text>
+                    <Text>
+                      <HomeOutlined /> {profileData.address}
+                    </Text>
+                    <Text>
+                      <CalendarOutlined /> 생년월일: {profileData.birthdate} (
+                      {profileData.age}세)
                     </Text>
                     <Text>
                       <ReadOutlined /> 전공: {profileData.major}
                     </Text>
                     <Text>
-                      <ToolOutlined /> 성별: {profileData.gender || "-"}
+                      <ToolOutlined /> 성별: {profileData.gender}
                     </Text>
                     <Text>
                       <StarOutlined /> 학점: {profileData.grade}
@@ -115,6 +119,13 @@ const MyProfile = () => {
                   </Space>
 
                   <Divider />
+
+                  <Title level={4}>자기소개</Title>
+                  <Paragraph
+                    ellipsis={{ rows: 3, expandable: true, symbol: "더보기" }}
+                  >
+                    {profileData.bio}
+                  </Paragraph>
 
                   <Title level={5}>보유 자격증</Title>
                   <ul>
@@ -132,6 +143,17 @@ const MyProfile = () => {
                       <Divider />
                       <Title level={4}>정보 수정</Title>
                       <Space direction="vertical" style={{ width: "100%" }}>
+                        <Text>성별:</Text>
+                        <Radio.Group
+                          value={editedData.gender}
+                          onChange={(e) =>
+                            handleChange("gender", e.target.value)
+                          }
+                        >
+                          <Radio value="남성">남성</Radio>
+                          <Radio value="여성">여성</Radio>
+                        </Radio.Group>
+
                         <Text>학점:</Text>
                         <Input
                           value={editedData.grade}
@@ -145,6 +167,14 @@ const MyProfile = () => {
                           value={editedData.major}
                           onChange={(e) =>
                             handleChange("major", e.target.value)
+                          }
+                        />
+
+                        <Text>관심 분야:</Text>
+                        <Input
+                          value={editedData.interest}
+                          onChange={(e) =>
+                            handleChange("interest", e.target.value)
                           }
                         />
 

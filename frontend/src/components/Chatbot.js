@@ -1,4 +1,3 @@
-// ✅ components/Chatbot.js
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -19,6 +18,37 @@ export const Chatbot = () => {
   const [conId] = useState(uuidv4());
   const userId = localStorage.getItem("userId");
   const { profileData } = useUser();
+
+  // ✅ 1. 이전 대화 불러오기
+  useEffect(() => {
+    const resumed = localStorage.getItem("resumeChat");
+    if (resumed) {
+      setMessages(JSON.parse(resumed)); // 복원
+      localStorage.removeItem("resumeChat"); // 재방지
+    }
+  }, []);
+
+  // ✅ 2. 대화 저장
+  const saveToHistory = (userMessage, botMessage) => {
+    const history = JSON.parse(localStorage.getItem("chatHistory")) || [];
+
+    const newRecord = {
+      id: Date.now(),
+      date: new Date().toISOString().split("T")[0],
+      topic: userMessage.slice(0, 30),
+      summary: botMessage.slice(0, 100),
+      fullConversation: [
+        ...messages,
+        { text: userMessage, isUser: true },
+        { text: botMessage, isUser: false },
+      ],
+    };
+
+    localStorage.setItem(
+      "chatHistory",
+      JSON.stringify([newRecord, ...history])
+    );
+  };
 
   const handleSend = async () => {
     const trimmedInput = input.trim();
@@ -43,7 +73,7 @@ export const Chatbot = () => {
       user_id: userId,
       user_message: trimmedInput,
       created_at: new Date().toISOString(),
-      interest: profileData?.interest || "", // 관심 분야 전달
+      interest: profileData?.interest || "",
     };
 
     try {
@@ -55,14 +85,16 @@ export const Chatbot = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setMessages((prev) => [
-          ...prev,
-          { text: data.bot_message || data.reply, isUser: false },
-        ]);
+        const botReply = data.bot_message || data.reply;
+        setMessages((prev) => [...prev, { text: botReply, isUser: false }]);
+        saveToHistory(trimmedInput, botReply);
       } else {
         setMessages((prev) => [
           ...prev,
-          { text: data?.detail || "❗GPT 응답에 실패했습니다.", isUser: false },
+          {
+            text: data?.detail || "❗GPT 응답에 실패했습니다.",
+            isUser: false,
+          },
         ]);
       }
     } catch (error) {

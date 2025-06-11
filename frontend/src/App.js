@@ -16,6 +16,7 @@ import Chatbot from "./components/Chatbot";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
 import { UserProvider } from "./components/UserContext"; // ✅ context 추가
+import HistoryeDetail from "./components/HistoryDetail"; // 필요시 추가
 import "antd/dist/antd.css";
 
 const App = () => {
@@ -30,7 +31,7 @@ const App = () => {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/signupsuccess" element={<SignupSuccessPage />} />
               <Route path="/find-password" element={<FindPasswordPage />} />
-              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/mypage*/*" element={<MyPage />} />
               <Route path="/my-profile" element={<MyProfile />} />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/certifications" element={<Certifications />} />
@@ -38,6 +39,7 @@ const App = () => {
               <Route path="/interests" element={<InterestsPage />} />
               <Route path="/chat" element={<Chatbot />} />
               <Route path="/history" element={<History />} />
+              <Route path="/history/:id" element={<HistoryeDetail />} />
             </Routes>
           </Layout>
         </Router>
