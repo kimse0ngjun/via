@@ -31,7 +31,10 @@ async def is_job_related(message: str) -> bool:
     return "예" in answer
 
 def preprocess_text(text: str) -> str:
-    text = text.replace("\n\n", " ").replace("\n", " ").replace("##", "").strip()
+    text = text.replace("\n\n", " ")
+    text = text.replace("\n", " ")
+    text = text.replace("##", "")
+    text = text.strip()
     text = re.sub(r"-", "", text)
     return text
 
@@ -39,18 +42,11 @@ def preprocess_text(text: str) -> str:
 async def chat_with_gpt(chat_data: ChatCreate):
     user_id = chat_data.user_id.strip()
 
-    # ✅ ObjectId 변환 시도
-    try:
-        object_id = ObjectId(user_id)
-    except Exception:
-        raise HTTPException(status_code=400, detail="유효하지 않은 user_id 형식입니다.")
-
-    user = await db.users.find_one({"_id": object_id})
-    student = await db.students.find_one({"_id": object_id})
+    user = await db.users.find_one({"_id": ObjectId(user_id)})
+    student = await db.students.find_one({"_id": ObjectId(user_id)})
 
     if not user or not student:
         raise HTTPException(status_code=404, detail="사용자 정보를 찾을 수 없습니다.")
-
 
     prompt = f"""
     ## 프롬프트 설명
@@ -91,6 +87,7 @@ async def chat_with_gpt(chat_data: ChatCreate):
         gpt_reply = response.choices[0].message.content.strip()
 
         job_related = await is_job_related(chat_data.user_message)
+
         job_name = None
         job_info = None
         career_text = ""
@@ -115,13 +112,13 @@ async def chat_with_gpt(chat_data: ChatCreate):
 
             if job_info:
                 career_text = f"""
-직업 정보:
-- 직업명: {job_info.get("job_nm", "N/A")}
-- 하는 일: {job_info.get("work", "정보 없음")}
-- 관련직업: {job_info.get("rel_job_nm", "없음")}
-- 연봉 수준: {job_info.get("wage", "정보 없음")}
-- 직업군: {job_info.get("aptit_name", "정보 없음")}
-"""
+    직업 정보:
+    - 직업명: {job_info.get("job_nm", "N/A")}
+    - 하는 일: {job_info.get("work", "정보 없음")}
+    - 관련직업: {job_info.get("rel_job_nm", "없음")}
+    - 연봉 수준: {job_info.get("wage", "정보 없음")}
+    - 직업군: {job_info.get("aptit_name", "정보 없음")}
+    """
 
         gpt_reply = preprocess_text(gpt_reply)
         career_text = preprocess_text(career_text)
@@ -153,12 +150,7 @@ async def chat_with_gpt(chat_data: ChatCreate):
             upsert=True
         )
 
-        return {
-            "success": True,
-            "bot_message": final_reply,
-            "job_name": job_name,
-            "con_id": chat_data.con_id
-        }
+        return {"reply": final_reply}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

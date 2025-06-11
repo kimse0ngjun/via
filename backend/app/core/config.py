@@ -18,7 +18,6 @@ class Settings(BaseSettings):
     NAVER_CLIENT_SECRET: str
     NAVER_REDIRECT_URI: str
 
-    # ✅ 추가해야 할 항목들
     SMTP_SERVER: str
     SMTP_PORT: int
     SMTP_USER: str
