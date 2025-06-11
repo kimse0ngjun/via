@@ -15,7 +15,7 @@ class MyPageUpdateRequest(BaseModel):
     introduction: Optional[str] = None
     certifications: Optional[List[str]] = None
 
-# 마이페이지 생성 모델델
+# 마이페이지 생성 모델
 class MyPageCreateRequest(BaseModel):
     name: str
     email: str

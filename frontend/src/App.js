@@ -32,6 +32,7 @@ const App = () => {
               <Route path="/signupsuccess" element={<SignupSuccessPage />} />
               <Route path="/find-password" element={<FindPasswordPage />} />
               <Route path="/mypage*/*" element={<MyPage />} />
+              <Route path="/mypage" element={<MyProfile />} />
               <Route path="/my-profile" element={<MyProfile />} />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/certifications" element={<Certifications />} />
