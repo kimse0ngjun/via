@@ -36,18 +36,26 @@ async def register_user(data: RegisterRequest):
     if existing_user:
         raise HTTPException(status_code=400, detail="이미 가입된 이메일입니다.")
 
+    user_id = ObjectId() 
     hashed_password = hash_password(data.password)
+
     new_user = {
+        "_id": user_id,
         "name": data.name,
         "age": data.age,
         "email": data.email,
         "hashed_password": hashed_password,
         "provider": "local",
     }
-    await users_collection.insert_one(new_user)
-    return {"message": "회원가입이 완료되었습니다."}
 
-# ✅ 로그인 API (user_id 포함)
+    await users_collection.insert_one(new_user)
+
+    return {
+        "message": "회원가입이 완료되었습니다.",
+        "user_id": str(user_id) 
+    }
+
+# 로그인 API (user_id 포함)
 @router.post("/login")
 async def login_user(data: LoginRequest):
     user = await users_collection.find_one({"email": data.email})
@@ -67,17 +75,16 @@ async def login_user(data: LoginRequest):
         }
     }
 
-# 로그인 상태 확인
 @router.get("/status")
 async def get_login_status(token: str = Depends(oauth2_scheme)):
     payload = verify_jwt_token(token)
     if payload is None:
         raise HTTPException(status_code=401, detail="토큰이 만료되었습니다.")
-    
+
     user = await users_collection.find_one({"_id": ObjectId(payload["user_id"])})
     if user is None:
         raise HTTPException(status_code=404, detail="사용자를 찾을 수 없습니다.")
-    
+
     return {"status": "success", "user": {"name": user["name"], "email": user["email"]}}
 
 # 비밀번호 재설정 요청
