@@ -1,4 +1,3 @@
-# 환경변수 설정
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -18,6 +17,12 @@ class Settings(BaseSettings):
     NAVER_CLIENT_ID: str
     NAVER_CLIENT_SECRET: str
     NAVER_REDIRECT_URI: str
+
+    SMTP_SERVER: str
+    SMTP_PORT: int
+    SMTP_USER: str
+    SMTP_PASSWORD: str
+    FRONTEND_URL: str
 
     class Config:
         env_file = ".env"
