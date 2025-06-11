@@ -20,6 +20,13 @@ SMTP_USER = settings.SMTP_USER
 SMTP_PASSWORD = settings.SMTP_PASSWORD
 
 # ✅ 비밀번호 해싱
+FRONTEND_URL = settings.FRONTEND_URL
+
+SMTP_SERVER = settings.SMTP_SERVER
+SMTP_PORT = settings.SMTP_PORT
+SMTP_USER = settings.SMTP_USER
+SMTP_PASSWORD = settings.SMTP_PASSWORD
+
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
@@ -94,6 +101,6 @@ def send_reset_email(email: str, token: str):
             server.starttls()
             server.login(SMTP_USER, SMTP_PASSWORD)
             server.sendmail(SMTP_USER, email, msg.as_string())
-        print(f"✅ 이메일 전송 성공: {email}")
+        print(f" 이메일 전송 성공: {email}")
     except Exception as e:
-        print(f"❌ 이메일 전송 오류: {e}")
+        print(f" 이메일 전송 오류: {e}")
