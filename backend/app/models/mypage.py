@@ -1,17 +1,44 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
+class MyPageUpdateRequest(BaseModel):
+    name: Optional[str] = None
+    phone_number: Optional[str] = None
+    address: Optional[str] = None
+    birthdate: Optional[str] = None
+    age: Optional[int] = None
+    gender: Optional[str] = None
+    major: Optional[str] = None
+    grade: Optional[float] = None
+    interests: Optional[List[str]] = None
+    introduction: Optional[str] = None
+    certifications: Optional[List[str]] = None
+
+class MyPageCreateRequest(BaseModel):
+    name: str
+    email: str
+    phone_number: Optional[str] = None
+    address: Optional[str] = None
+    birthdate: Optional[str] = None  
+    age: Optional[int] = None
+    gender: Optional[str] = None
+    major: Optional[str] = None
+    grade: Optional[float] = None
+    interests: Optional[List[str]] = []
+    introduction: Optional[str] = None
+    certifications: Optional[List[str]] = []
+
 # 마이페이지 응답 모델
 class MyPageResponse(BaseModel):
     name: str
-    age: int
-    grade: Optional[str] = None
-    major: Optional[str] = None
-    certifications: Optional[list] = None
-
-class MyPageUpdateRequest(BaseModel):
-    name: Optional[str] = None
-    age: Optional[int] = None
-    grade: Optional[str] = None
-    major: Optional[str] = None
-    certifications: Optional[list] = None
+    email: str
+    phone_number: Optional[str]
+    address: Optional[str]
+    birthdate: Optional[str]
+    age: Optional[int]
+    gender: Optional[str]
+    major: Optional[str]
+    grade: Optional[float]
+    interests: Optional[List[str]]
+    introduction: Optional[str]
+    certifications: Optional[List[str]]
