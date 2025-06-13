@@ -32,13 +32,8 @@ export const AppHeader = () => {
   };
 
   const handleLogout = () => {
-    logout(); // 로그인 상태만 false로
-    // logoutAndClearStorage(); // 유틸 함수 사용 시
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("chatHistory");
-    localStorage.removeItem("isLoggedIn");
+    logout();
+    localStorage.clear(); // 🔥 모든 로컬스토리지 항목 삭제
     navigate("/login");
   };
 
