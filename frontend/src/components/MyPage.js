@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom'; // Router 제거
 import MyProfile from './MyProfile'; // 마이페이지
 import Certifications from './Certifications'; // 자격증 관리
 import EditProfile from './EditProfile'; // 프로필 수정
+import NewMyProfile from './NewMyProfile'; 
 
 const { Content } = Layout;
 
@@ -26,6 +27,7 @@ const MyPage = () => {
             <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/certifications" element={<Certifications />} />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/new-profile" element={<NewMyProfile />} /> 
           </Routes>
         </Content>
       </Layout>

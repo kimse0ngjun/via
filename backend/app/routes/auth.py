@@ -55,7 +55,7 @@ async def register_user(data: RegisterRequest):
         "user_id": str(user_id) 
     }
 
-# 로그인 API (user_id 포함)
+# 로그인 API 
 @router.post("/login")
 async def login_user(data: LoginRequest):
     user = await users_collection.find_one({"email": data.email})
@@ -124,69 +124,3 @@ async def reset_password(request: PasswordResetConfirm):
 
     new_token = create_jwt_token({"sub": str(user["_id"]), "user_id": str(user["_id"])})
     return {"message": "비밀번호가 변경되었습니다.", "access_token": new_token, "token_type": "bearer"}
-
-# 소셜 로그인 - Google
-@router.get("/google")
-async def google_login():
-    return {
-        "login_url": f"https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={GOOGLE_CLIENT_ID}&redirect_uri={GOOGLE_REDIRECT_URI}&scope=openid%20email%20profile"
-    }
-
-@router.get("/google/callback")
-async def google_callback(code: str):
-    token_url = "https://oauth2.googleapis.com/token"
-    payload = {
-        "code": code, "client_id": GOOGLE_CLIENT_ID, "client_secret": GOOGLE_CLIENT_SECRET,
-        "redirect_uri": GOOGLE_REDIRECT_URI, "grant_type": "authorization_code"
-    }
-    
-    async with httpx.AsyncClient() as client:
-        response = await client.post(token_url, data=payload)
-    if response.status_code != 200:
-        raise HTTPException(status_code=400, detail="구글 인증 실패")
-
-    access_token = response.json().get("access_token")
-    async with httpx.AsyncClient() as client:
-        user_info = await client.get("https://www.googleapis.com/oauth2/v2/userinfo", headers={"Authorization": f"Bearer {access_token}"})
-    user_info = user_info.json()
-    user = await users_collection.find_one({"email": user_info["email"]}) or {
-        "name": user_info["name"], "email": user_info["email"], "provider": "google"
-    }
-    if "_id" not in user:
-        await users_collection.insert_one(user)
-
-    token = create_jwt_token({"sub": str(user["_id"]), "user_id": str(user["_id"])})
-    return {"access_token": token, "user": {"name": user["name"], "email": user["email"]}}
-
-# 소셜 로그인 - Kakao
-@router.get("/kakao")
-async def kakao_login():
-    return {
-        "login_url": f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={KAKAO_CLIENT_ID}&redirect_uri={KAKAO_REDIRECT_URI}"
-    }
-
-@router.get("/kakao/callback")
-async def kakao_callback(code: str):
-    token_url = "https://kauth.kakao.com/oauth/token"
-    payload = {
-        "grant_type": "authorization_code", "client_id": KAKAO_CLIENT_ID,
-        "client_secret": KAKAO_CLIENT_SECRET, "redirect_uri": KAKAO_REDIRECT_URI, "code": code
-    }
-    async with httpx.AsyncClient() as client:
-        response = await client.post(token_url, data=payload)
-    if response.status_code != 200:
-        raise HTTPException(status_code=400, detail="카카오 인증 실패")
-
-    access_token = response.json().get("access_token")
-    async with httpx.AsyncClient() as client:
-        user_info = await client.get("https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
-    user_info = user_info.json()
-    email = user_info["kakao_account"]["email"]
-    user = await users_collection.find_one({"email": email}) or {
-        "name": user_info["properties"]["nickname"], "email": email, "provider": "kakao"
-    }
-    if "_id" not in user:
-        await users_collection.insert_one(user)
-
-    token = create_jwt_token({"sub": str(user["_id"]), "user_id": str(user["_id"])})
-    return {"access_token": token, "user": {"name": user["name"], "email": user["email"]}}

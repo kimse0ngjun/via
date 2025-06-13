@@ -24,14 +24,6 @@ class StudentUpdate(BaseModel):
     interest: Optional[str] = None
     role: Optional[str] = None
 
-# 마이페이지 응답 모델
-class MyPageResponse(BaseModel):
-    name: str
-    age: int
-    grade: Optional[str] = None
-    major: Optional[str] = None
-    certifications: Optional[list] = None
-
 # 흥미 모델
 class Interest(BaseModel):
     job_category: str

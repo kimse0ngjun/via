@@ -41,6 +41,6 @@ class MyPageResponse(BaseModel):
     gender: Optional[str]
     major: Optional[str]
     grade: Optional[float]
-    interests: Optional[List[str]]
+    interests: list[str] = []
     introduction: Optional[str]
-    certifications: Optional[List[str]]
+    certifications: list[str] = []

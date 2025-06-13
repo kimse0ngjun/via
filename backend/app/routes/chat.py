@@ -43,7 +43,7 @@ async def chat_with_gpt(chat_data: ChatCreate):
     user_id = chat_data.user_id.strip()
 
     user = await db.users.find_one({"_id": ObjectId(user_id)})
-    student = await db.students.find_one({"_id": ObjectId(user_id)})
+    student = await db.students.find_one({"user_id": ObjectId(user_id)})
 
     if not user or not student:
         raise HTTPException(status_code=404, detail="사용자 정보를 찾을 수 없습니다.")
@@ -51,15 +51,15 @@ async def chat_with_gpt(chat_data: ChatCreate):
     prompt = f"""
     ## 프롬프트 설명
 
-    당신은 IT 백엔드 개발 전문가입니다. 사용자의 학력, 관심사, 보유 기술을 바탕으로 백엔드 개발 관련 질문에 대한 답변을 제공합니다.
+    당신은 IT 전문가입니다. 사용자의 학력, 관심사, 보유 기술을 바탕으로 개발 관련 질문에 대한 답변을 제공합니다.
 
     ## 사용자 정보 
     - 이름: {user['name']} 
     - 나이: {user['age']} 
-    - 성별: {student['gender']} 
+    - 성별: {user['gender']}
     - 학점: {student['grade']} 
-    - 전공: {student['major']} 
-    - 관심 분야: {student['interest']} 
+    - 전공: {student.get('subject', '정보 없음')}
+    - 관심 분야: {student['interests']} 
     - 보유 자격증: {', '.join(student['certifications']) if student['certifications'] else '없음'} 
 
     ## 사용자의 질문: 
