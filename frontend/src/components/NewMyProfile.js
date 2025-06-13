@@ -1,6 +1,5 @@
-// src/components/NewMyProfile.js
 import React, { useState } from "react";
-import { Input, Button, message, Typography, Form } from "antd";
+import { Input, Button, message, Typography, Form, Radio } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
@@ -11,6 +10,7 @@ const defaultForm = {
   interests: "",
   introduction: "",
   certifications: "",
+  gender: "", // ✅ 추가
 };
 
 const NewMyProfile = ({ userId, onSuccess }) => {
@@ -28,9 +28,16 @@ const NewMyProfile = ({ userId, onSuccess }) => {
     const body = {
       major: formData.major,
       grade: formData.grade ? parseFloat(formData.grade) : null,
-      interests: formData.interests.split(",").map((s) => s.trim()).filter(Boolean),
+      gender: formData.gender || null, // ✅ 추가
+      interests: formData.interests
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
       introduction: formData.introduction,
-      certifications: formData.certifications.split(",").map((s) => s.trim()).filter(Boolean),
+      certifications: formData.certifications
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
     };
 
     try {
@@ -72,8 +79,24 @@ const NewMyProfile = ({ userId, onSuccess }) => {
           />
         </Form.Item>
 
+        {/* ✅ 성별 추가 */}
+        <Form.Item label="성별">
+          <Radio.Group
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+          >
+            <Radio value="남성">남성</Radio>
+            <Radio value="여성">여성</Radio>
+          </Radio.Group>
+        </Form.Item>
+
         <Form.Item label="흥미 (쉼표로 구분)">
-          <Input name="interests" value={formData.interests} onChange={handleChange} />
+          <Input
+            name="interests"
+            value={formData.interests}
+            onChange={handleChange}
+          />
         </Form.Item>
 
         <Form.Item label="자기소개">
@@ -86,7 +109,11 @@ const NewMyProfile = ({ userId, onSuccess }) => {
         </Form.Item>
 
         <Form.Item label="자격증 (쉼표로 구분)">
-          <Input name="certifications" value={formData.certifications} onChange={handleChange} />
+          <Input
+            name="certifications"
+            value={formData.certifications}
+            onChange={handleChange}
+          />
         </Form.Item>
 
         <Form.Item>
