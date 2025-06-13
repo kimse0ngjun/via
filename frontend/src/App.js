@@ -4,7 +4,7 @@ import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import MainPage from "./components/MainPage";
 import MyPage from "./components/MyPage";
-import FindPasswordPage from "./components/FindPasswordPage"; // 오타 수정: FInd → Find
+import FindPasswordPage from "./components/FindPasswordPage";
 import SignupSuccessPage from "./components/SignupSuccessPage";
 import MyProfile from "./components/MyProfile";
 import EditProfile from "./components/EditProfile";
@@ -15,15 +15,15 @@ import ResetPasswordPage from "./components/ResetPasswordPage";
 import Chatbot from "./components/Chatbot";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./contexts/AuthContext";
-import { UserProvider } from "./components/UserContext"; // ✅ context 추가
-import HistoryeDetail from "./components/HistoryDetail"; // 필요시 추가
+import { UserProvider } from "./components/UserContext";
+import HistoryeDetail from "./components/HistoryDetail";
 import "antd/dist/antd.css";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <UserProvider>
-        <Router>
+    <Router>
+      <AuthProvider>
+        <UserProvider>
           <Layout>
             <Routes>
               <Route path="/" element={<MainPage />} />
@@ -43,9 +43,9 @@ const App = () => {
               <Route path="/history/:id" element={<HistoryeDetail />} />
             </Routes>
           </Layout>
-        </Router>
-      </UserProvider>
-    </AuthProvider>
+        </UserProvider>
+      </AuthProvider>
+    </Router>
   );
 };
 

@@ -1,12 +1,14 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(null); // 초기값을 null로 설정
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // 초기값 null
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loggedIn);
   }, []);
 
@@ -15,13 +17,21 @@ export const AuthProvider = ({ children }) => {
   }, [isLoggedIn]);
 
   const login = () => {
-    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem("isLoggedIn", "true");
     setIsLoggedIn(true);
   };
 
   const logout = () => {
-    localStorage.removeItem('isLoggedIn');
+    // ✅ 로그아웃 시 localStorage 정보 제거
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("chatHistory");
+
     setIsLoggedIn(false);
+
+    // ✅ 로그인 페이지로 리다이렉트
   };
 
   return (

@@ -18,6 +18,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import "../styles/Header.css";
 import { AuthContext } from "../contexts/AuthContext";
+// import { logoutAndClearStorage } from "../utils/logoutAndClearStorage"; // 유틸 분리 시 사용
+
 export const AppHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -29,7 +31,16 @@ export const AppHeader = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  console.log("isLoggedIn:", isLoggedIn);
+  const handleLogout = () => {
+    logout(); // 로그인 상태만 false로
+    // logoutAndClearStorage(); // 유틸 함수 사용 시
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("chatHistory");
+    localStorage.removeItem("isLoggedIn");
+    navigate("/login");
+  };
 
   const menuItems = [{ text: "상담기록", path: "/history" }];
 
@@ -45,7 +56,7 @@ export const AppHeader = () => {
         </ListItem>
       ))}
       {isLoggedIn ? (
-        <ListItem component="button" onClick={logout}>
+        <ListItem component="button" onClick={handleLogout}>
           <ListItemText primary="로그아웃" />
         </ListItem>
       ) : (
@@ -111,9 +122,7 @@ export const AppHeader = () => {
               anchor="right"
               open={mobileOpen}
               onClose={handleDrawerToggle}
-              ModalProps={{
-                keepMounted: true,
-              }}
+              ModalProps={{ keepMounted: true }}
             >
               {drawer}
             </Drawer>
@@ -125,7 +134,7 @@ export const AppHeader = () => {
                 <IconButton color="inherit" onClick={() => navigate("/mypage")}>
                   <AccountCircleIcon />
                 </IconButton>
-                <Button color="inherit" onClick={logout}>
+                <Button color="inherit" onClick={handleLogout}>
                   로그아웃
                 </Button>
               </>
