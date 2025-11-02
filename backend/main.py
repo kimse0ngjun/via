@@ -10,7 +10,7 @@ app.add_middleware(
     allow_origins=["http://localhost:3000"],  # React 앱 주소
     allow_credentials=True,
     allow_methods=["*"],  # 모든 HTTP 메서드 허용
-    allow_headers=["*"],  # 모든 헤더 허용
+    allow_headers=["*"], 
 )
 
 # 라우터 등록
