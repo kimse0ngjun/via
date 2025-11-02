@@ -1,0 +1,84 @@
+/* 기본 스타일 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* 헤더 스타일 */
+.app-bar {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 네비게이션 스타일 */
+.navbar {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-button {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: black !important;
+  text-transform: none !important;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 로그인 & 회원가입 버튼 스타일 */
+.auth-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.login-button {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: black !important;
+  text-transform: none !important;
+}
+
+/* 회원가입 버튼 색상 변경 */
+.signup-btn {
+  background-color: black !important;
+  color: white !important;
+  border: 1px solid black !important;
+}
+
+/* 마우스 호버 시 색상 변경 */
+.signup-btn:hover {
+  background-color: #222 !important;
+  border-color: #222 !important;
+}
+
+/* 모바일 메뉴 아이콘 */
+.menu-icon {
+  color: black !important;
+}
+
+/* 모바일 드로어 스타일 */
+.drawer {
+  width: 250px;
+}
+
+.drawer .list-item {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.drawer .list-item:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}

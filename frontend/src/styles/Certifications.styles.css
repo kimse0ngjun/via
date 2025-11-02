@@ -1,0 +1,55 @@
+/* src/styles/Certifications.styles.css */
+.certifications-layout {
+  min-height: 100vh;
+}
+
+.certifications-content-layout {
+  padding: 24px;
+}
+
+.certifications-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+.certifications-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.certifications-input,
+.certifications-date-picker {
+  width: 60%;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.add-button {
+  width: 38%;
+  margin-bottom: 20px;
+}
+
+.certifications-list {
+  margin-top: 20px;
+}
+
+.certification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.certification-name {
+  font-weight: bold;
+}
+
+.certification-date {
+  color: #888;
+}
+
+.input-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
